@@ -1,0 +1,4 @@
+bit, flash, jiff, sec
+buck, net, spur, sun
+err, fall, sin, stray
+bots, came, ken, tan
