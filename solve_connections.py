@@ -7,6 +7,19 @@ import matplotlib.pyplot as plt
 #import fasttext.util
 from nltk.corpus import wordnet as wn
 from sentence_transformers import SentenceTransformer
+from sklearn.manifold import MDS
+from cluster_equal_size import cluster_equal_size_mincostmaxflow
+from freedictionaryapi.clients.sync_client import DictionaryApiClient
+
+def get_definition(word):
+    defns = []
+    with DictionaryApiClient() as client:
+        parser = client.fetch_parser(word)
+    word = parser.word
+    for meaning in word.meanings:
+        for definition in meaning.definitions:
+                defns.append(definition.definition)
+    return(defns)
 
 def read_csv(file_path):
     data_array = []
@@ -39,40 +52,80 @@ model = SentenceTransformer("all-MiniLM-L6-v2")
 #model = SentenceTransformer("all-mpnet-base-v2")
 
 synsets = [wn.synsets(w) for w  in puzzle_words]
-definitions = [[w.definition() for w in s] for s in synsets]
+#definitions = [get_definition(puzzle_words[i]) + [w.definition() for w in s] for i,s in enumerate(synsets)]
+definitions = [[w.definition() for w in s] for i,s in enumerate(synsets)]
+#definitions = [get_definition(w) for w in puzzle_words]
+for i,d in enumerate(definitions):
+    d.append(puzzle_words[i])
 
-print()
-for s in synsets:
-    print(s)
+#print()
+#for s in synsets:
+#    print(s)
+#
+#sim_mat = [[0 for j in range(16)] for i in range(16)]
+#for wi,w in enumerate(synsets):
+#    for xi,x in enumerate(synsets):
+#        all_sims = []
+#        for ws in w:
+#            for xs in x:
+#                all_sims.append(wn.wup_similarity(ws,xs))
+#        sim_mat[wi][xi] = max(all_sims)
+
+dist_mat2 = [[1.0 for j in range(16)] for i in range(16)]
+embeddings = [model.encode(defn) for defn in definitions]
+for e in embeddings:
+    print(e.shape)
+
+#for i,w in enumerate(puzzle_words):
+#    np.append(embeddings[i],model.encode(w))
+#    print(embeddings[i])
 
 print()
 for d in definitions:
     print(d)
 
-sim_mat = [[0 for j in range(16)] for i in range(16)]
-for wi,w in enumerate(synsets):
-    for xi,x in enumerate(synsets):
-        all_sims = []
-        for ws in w:
-            for xs in x:
-                all_sims.append(wn.wup_similarity(ws,xs))
-        sim_mat[wi][xi] = max(all_sims)
-
-sim_mat2 = [[0 for j in range(16)] for i in range(16)]
-embeddings = [model.encode(defn) for defn in definitions]
 for wi,w in enumerate(embeddings):
     for xi,x in enumerate(embeddings):
         all_sims = []
         for ws in w:
             for xs in x:
                 all_sims.append(cosine_similarity([ws],[xs])[0][0])
-        sim_mat2[wi][xi] = max(np.abs(all_sims))
+        dist_mat2[wi][xi] = 1-max(np.abs(all_sims))
 
-plt.matshow(sim_mat)
-plt.colorbar()
-plt.title("Word Similarities synsets")
+for i,row in enumerate(dist_mat2):
+    dist_mat2[i][i] = 1.0
+
+#cluster_size = 4
+#n_clusters = 4
+#unassigned = range(cluster_size*n_clusters)
+#clusters = [[] for n in n_clusters]
+#for 
+
+mds = MDS(n_components=25, dissimilarity='precomputed', random_state=0)
+# Get the embeddings
+X_transform = mds.fit_transform(dist_mat2)
+
+predicted_groups = cluster_equal_size_mincostmaxflow(X_transform, 4, show_plt=False)[0]#[0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3]
+print(predicted_groups)
+
+#plt.matshow(sim_mat)
+#plt.colorbar()
+#plt.title("Word Similarities synsets")
+#plt.show()
+sizes = [64 for i in range(16)]
+colors = ['y','y','y','y','g','g','g','g','b','b','b','b','m','m','m','m']
+group_colors = [['y','g','b','m'][i] for i in predicted_groups]
+fig = plt.figure()
+#ax = fig.add_subplot(projection='3d')
+ax = fig.add_subplot()
+#ax.scatter(X_transform[:,0], X_transform[:,1], X_transform[:,2], s=sizes, c=colors)
+ax.scatter(X_transform[:,0], X_transform[:,1], s=[4*x for x in sizes], c=group_colors)
+ax.scatter(X_transform[:,0], X_transform[:,1], s=[2*x for x in sizes], c=['k','k','k','k','k','k','k','k','k','k','k','k','k','k','k','k'])
+ax.scatter(X_transform[:,0], X_transform[:,1], s=sizes, c=colors)
+plt.title('Embedding')
 plt.show()
-plt.matshow(sim_mat2)
+
+plt.matshow(dist_mat2)
 plt.colorbar()
 plt.title("Word Similarities defn Transformer")
 plt.show()
