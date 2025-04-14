@@ -1,4 +1,5 @@
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.manifold import spectral_embedding
 import numpy as np
 #from sklearn.metrics.pairwise import linear_kernel
 #from sklearn.metrics.pairwise import rbf_kernel
@@ -125,11 +126,14 @@ mds = MDS(n_components=2, dissimilarity='precomputed', random_state=0)
 # Get the embeddings
 X_transform = mds.fit_transform(dist_mat2)
 
-clustering = SpectralClustering(n_clusters=4,
-        assign_labels='discretize',
-        affinity='precomputed',
-        random_state=0).fit(dist_mat2)
-predicted_groups = clustering.labels_
+eigenvecs = spectral_embedding(np.array(dist_mat2), n_components=4, random_state=0)
+print(eigenvecs)
+
+#clustering = SpectralClustering(n_clusters=4,
+#        assign_labels='discretize',
+#        affinity='precomputed',
+#        random_state=0).fit(dist_mat2)
+#predicted_groups = clustering.labels_
 
 #clustering = SpectralClustering(n_clusters=3,
 #        assign_labels='discretize',
@@ -137,6 +141,7 @@ predicted_groups = clustering.labels_
 #        random_state=0).fit([x[0:12] for x in dist_mat2[0:12]])
 #predicted_groups = clustering.labels_
 #predicted_groups = cluster_equal_size_mincostmaxflow(X_transform, 4, show_plt=False)[0]#[0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3]
+predicted_groups = cluster_equal_size_mincostmaxflow(eigenvecs, 4, show_plt=False)[0]#[0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3]
 print(predicted_groups)
 
 #plt.matshow(sim_mat)
