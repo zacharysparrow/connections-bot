@@ -9,7 +9,9 @@ from nltk.corpus import wordnet as wn
 from sentence_transformers import SentenceTransformer
 from sklearn.manifold import MDS
 from cluster_equal_size import cluster_equal_size_mincostmaxflow
-from freedictionaryapi.clients.sync_client import DictionaryApiClient
+#from freedictionaryapi.clients.sync_client import DictionaryApiClient
+from sentence_transformers.cross_encoder import CrossEncoder
+from sklearn.cluster import SpectralClustering
 
 def get_definition(word):
     defns = []
@@ -36,7 +38,7 @@ def read_csv(file_path):
          return []
     return data_array
 
-puzzle = read_csv("puzzles/test_puzzle_3.txt")
+puzzle = read_csv("puzzles/test_puzzle_2.txt")
 puzzle_words = [x.lower().strip() for xs in puzzle for x in xs]
 print(puzzle_words)
 
@@ -49,11 +51,13 @@ print(puzzle_words)
 #sim_mat = linear_kernel(vecs)
 #sim_mat = rbf_kernel(vecs, gamma=1/10)
 model = SentenceTransformer("all-MiniLM-L6-v2")
-#model = SentenceTransformer("all-mpnet-base-v2")
+#model = CrossEncoder("cross-encoder/stsb-distilroberta-base")
+#model = CrossEncoder("cross-encoder/stsb-TinyBERT-L4")
 
 synsets = [wn.synsets(w) for w  in puzzle_words]
 #definitions = [get_definition(puzzle_words[i]) + [w.definition() for w in s] for i,s in enumerate(synsets)]
 definitions = [[w.definition() for w in s] for i,s in enumerate(synsets)]
+#definitions = [[] for i,s in enumerate(synsets)]
 #definitions = [get_definition(w) for w in puzzle_words]
 for i,d in enumerate(definitions):
     d.append(puzzle_words[i])
@@ -71,14 +75,8 @@ for i,d in enumerate(definitions):
 #                all_sims.append(wn.wup_similarity(ws,xs))
 #        sim_mat[wi][xi] = max(all_sims)
 
-dist_mat2 = [[1.0 for j in range(16)] for i in range(16)]
+dist_mat2 = [[0.0 for j in range(16)] for i in range(16)]
 embeddings = [model.encode(defn) for defn in definitions]
-for e in embeddings:
-    print(e.shape)
-
-#for i,w in enumerate(puzzle_words):
-#    np.append(embeddings[i],model.encode(w))
-#    print(embeddings[i])
 
 print()
 for d in definitions:
@@ -86,11 +84,33 @@ for d in definitions:
 
 for wi,w in enumerate(embeddings):
     for xi,x in enumerate(embeddings):
+        if xi < wi:
+            continue
         all_sims = []
         for ws in w:
             for xs in x:
                 all_sims.append(cosine_similarity([ws],[xs])[0][0])
-        dist_mat2[wi][xi] = 1-max(np.abs(all_sims))
+#        dist_mat2[wi][xi] = 1-max(np.abs(all_sims)) #uncomment to make dist matrix
+        dist_mat2[wi][xi] = max(np.abs(all_sims)) #uncomment to make affinity matrix
+        dist_mat2[xi][wi] = dist_mat2[wi][xi]
+
+
+#for wi,w in enumerate(definitions):
+#    for xi,x in enumerate(definitions):
+#        if xi < wi:
+#            continue
+#        all_sims = []
+#        for ws in w:
+#            ranks = model.rank(ws, x)
+#            scores = [rank['score'] for rank in ranks]
+#            all_sims.append(max(scores))
+##        for xs in x:
+##            ranks = model.rank(xs, w)
+##            scores = [rank['score'] for rank in ranks]
+##            all_sims.append(max(scores))
+##        all_sims = max(all_sims)
+#        dist_mat2[wi][xi] = 1-max(all_sims)
+#        dist_mat2[xi][wi] = dist_mat2[wi][xi]
 
 for i,row in enumerate(dist_mat2):
     dist_mat2[i][i] = 1.0
@@ -101,11 +121,22 @@ for i,row in enumerate(dist_mat2):
 #clusters = [[] for n in n_clusters]
 #for 
 
-mds = MDS(n_components=25, dissimilarity='precomputed', random_state=0)
+mds = MDS(n_components=2, dissimilarity='precomputed', random_state=0)
 # Get the embeddings
 X_transform = mds.fit_transform(dist_mat2)
 
-predicted_groups = cluster_equal_size_mincostmaxflow(X_transform, 4, show_plt=False)[0]#[0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3]
+clustering = SpectralClustering(n_clusters=4,
+        assign_labels='discretize',
+        affinity='precomputed',
+        random_state=0).fit(dist_mat2)
+predicted_groups = clustering.labels_
+
+#clustering = SpectralClustering(n_clusters=3,
+#        assign_labels='discretize',
+#        affinity='precomputed',
+#        random_state=0).fit([x[0:12] for x in dist_mat2[0:12]])
+#predicted_groups = clustering.labels_
+#predicted_groups = cluster_equal_size_mincostmaxflow(X_transform, 4, show_plt=False)[0]#[0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3]
 print(predicted_groups)
 
 #plt.matshow(sim_mat)
