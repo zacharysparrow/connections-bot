@@ -1,5 +1,6 @@
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.manifold import spectral_embedding
+from scipy.special import softmax
 import numpy as np
 #from sklearn.metrics.pairwise import linear_kernel
 #from sklearn.metrics.pairwise import rbf_kernel
@@ -84,9 +85,9 @@ for i,d in enumerate(definitions):
 dist_mat2 = [[0.0 for j in range(16)] for i in range(16)]
 embeddings = [model.encode(defn) for defn in definitions]
 
-print()
-for d in definitions:
-    print(d)
+#print()
+#for d in definitions:
+#    print(d)
 
 def find_max_position(matrix, idx):
     matrix_np = np.array(matrix)
@@ -94,11 +95,67 @@ def find_max_position(matrix, idx):
     row_index, col_index = np.unravel_index(max_index_flat, matrix_np.shape)
     return [int(row_index), int(col_index)][idx]
 
+def score_defn(defn, words, weights):
+    sim_measure = []
+    for i,w in enumerate(words):
+        word_sims = cosine_similarity([defn],w)[0]
+        weighted_sims = [x*y for x,y in zip(word_sims, weights[i])]
+#        best_sim = max(word_sims)
+        best_sim = max(weighted_sims)
+        sim_measure.append(best_sim)
+    sim_measure.sort()
+    sim_measure.reverse()
+    best_sims = sim_measure[0:3]
+    worst_sims = sim_measure[3:]
+    return float(np.mean(best_sims) - np.mean(worst_sims))
+#def score_defn(defn, words):
+#    sim_measure = []
+#    for i,w in enumerate(words):
+#        word_sims = cosine_similarity([defn],w)[0]
+#        best_sim = max(word_sims)
+#        sim_measure.append(best_sim)
+#    sim_measure.sort()
+#    sim_measure.reverse()
+#    best_sims = sim_measure[0:3]
+#    worst_sims = sim_measure[3:]
+#    return float(np.mean(best_sims) - np.mean(worst_sims))
+
+def update_scores(embeddings,scores):
+    all_scores = []
+    for wi,w in enumerate(embeddings):
+        defn_scores = []
+        words_to_check = [item for i, item in enumerate(embeddings) if i != wi]
+        for wj,w_defn in enumerate(w):
+            score = score_defn(w_defn, words_to_check, [item for i, item in enumerate(scores) if i != wi])
+#            score = score_defn(w_defn, words_to_check)
+            defn_scores.append(score)
+        updated_scores = [x*y for x,y in zip(defn_scores,scores[wi])]
+        all_scores.append(list(softmax(updated_scores)))
+    return all_scores
+
+all_scores = [softmax([1.0 for d in defn]) for defn in definitions]
+for i in range(10):
+    all_scores = update_scores(embeddings, all_scores)
+    print(all_scores[0])
+print()
+for a in all_scores:
+    print(a)
+print()
+
+best_defns = []
+for defn in all_scores:
+    best_defns.append(defn.index(max(defn)))
+
+print(best_defns)
+chosen_defns = [0,1,0,2,2,2,1,4,3,7,5,2,4,2,0,1] # chosen by hand to maximize overlap with group and minimze overlap with other groups
+print(chosen_defns)
+chosen_defns = best_defns
+
 save_pair = [5,6]
 save_sims = []
 defns_used = [['x' for j in range(16)] for i in range(16)]
 #defns_used2 = [[0 for j in range(16)] for i in range(16)]
-chosen_defns = [0,1,0,2,2,2,1,4,3,7,5,2,4,2,0,1] #6, 12, 14, 15 are arbitrary
+#chosen_defns = [0,1,0,2,2,2,1,4,3,7,5,2,4,2,0,1] # chosen by hand to maximize overlap with group and minimze overlap with other groups
 for wi,w in enumerate(embeddings):
     for xi,x in enumerate(embeddings):
         if xi <= wi:
@@ -115,8 +172,8 @@ for wi,w in enumerate(embeddings):
             save_sims = all_sims
 #        dist_mat2[wi][xi] = max([max(x) for x in all_sims]) #uncomment to make affinity matrix
         dist_mat2[wi][xi] = all_sims[chosen_defns[wi]][chosen_defns[xi]] #uncomment to make affinity matrix
-#        defns_used[wi][xi] = find_max_position(all_sims,0) 
-#        defns_used[xi][wi] = find_max_position(all_sims,1)
+        defns_used[wi][xi] = find_max_position(all_sims,0) 
+        defns_used[xi][wi] = find_max_position(all_sims,1)
 #        dist_mat2[wi][xi] = max(all_sims) #uncomment to make affinity matrix
 #        dist_mat2[wi][xi] = np.mean(all_sims) #uncomment to make affinity matrix
 #        dist_mat2[wi][xi] = np.mean([x**2 for x in all_sims]) #uncomment to make affinity matrix
@@ -125,9 +182,9 @@ for wi,w in enumerate(embeddings):
 print("looking for consistency in number accross rows within (expected) cluster")
 print(np.array(defns_used))
 
-print(save_sims)
-plt.hist(sum(save_sims,[]))
-plt.show()
+#print(save_sims)
+#plt.hist(sum(save_sims,[]))
+#plt.show()
 
 #for wi,w in enumerate(definitions):
 #    for xi,x in enumerate(definitions):
@@ -188,7 +245,7 @@ def average_distance_in_group(group):
         return 0
     distances = [np.sqrt(sum([(p1[i] - p2[i])**2 for i in range(len(p1))]))
                  for p1, p2 in combinations(group, 2)]
-    return np.mean(distances)
+    return float(np.mean(distances))
 
 grouped_data = group_by_cluster(eigenvecs, predicted_groups)
 grouped_words = group_by_cluster(puzzle_words, predicted_groups)

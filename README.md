@@ -12,7 +12,7 @@ Strategy:
 - (x) Compute similarities between each definition for each word
 - (x) Use definitions with maximum similarity between words for word similarities
 	- want to choose only one definition for each word, possibly cluster definitions first
-	- choose defn that makes the tightest clusters with as much separation as possible between clusters
+	- choose defn that makes the tightest clusters with as much separation as possible between clusters (modularity or silhouette)
 - Cluster words into groups of 4 based on similarity scores
 
 Clustering seems to be the most room for improvement
@@ -21,6 +21,12 @@ Best strategy is likely NOT finding the best clusters -- start with clusters tha
 - Need to be able to update clusters given additional info (e.g. "one away..." or not)
 - Update clusters when a guess is successful
 - Likely want more greedy clustering -- if points are close they are very likely to be related, we don't want purple guesses messing up yellow
+
+Possible algorithm:
+- initialize definitions and clustering
+- for the least happy member, can you improve overall score by swapping with another word with both words (possibly) changing definition?
+- repeat last step until no swaps available
+- initialize with greedy algorithm? group closest points, next closest, etc..
 
 Dependent on the relevent definitions actually being in our dictionary... not good for informal uses
 
