@@ -27,6 +27,12 @@ Possible algorithm:
 - for the least happy member, can you improve overall score by swapping with another word with both words (possibly) changing definition?
 - repeat last step until no swaps available
 - initialize with greedy algorithm? group closest points, next closest, etc..
+-- or --
+- cluster
+- recompute best defns
+- repeat
+
+can view choosing a defnition as having a large pool of (n\_word)\*(n\_def) words with the additional constraint that only one word of a group (corresponding to the different defns a word can have) can be chosen for the 4x4 groups.
 
 Dependent on the relevent definitions actually being in our dictionary... not good for informal uses
 
