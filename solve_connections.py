@@ -44,9 +44,10 @@ def read_csv(file_path):
          return []
     return data_array
 
-puzzle = read_csv("puzzles/test_puzzle_3.txt")
+puzzle = read_csv("puzzles/test_puzzle_3.txt") #2,3 are easy, 1,4 are hard
 puzzle_words = [x.lower().strip() for xs in puzzle for x in xs]
 print(np.reshape(puzzle_words,(4,4)))
+print()
 
 #fasttext.util.download_model('en', if_exists='ignore')  
 #ft = fasttext.load_model('cc.en.300.bin')
@@ -60,16 +61,16 @@ model = SentenceTransformer("all-MiniLM-L6-v2")
 #model = CrossEncoder("cross-encoder/stsb-distilroberta-base")
 #model = CrossEncoder("cross-encoder/stsb-TinyBERT-L4")
 
-synsets = [wn.synsets(w) for w  in puzzle_words]
-#definitions = [get_definition(puzzle_words[i]) + [w.definition() for w in s] for i,s in enumerate(synsets)]
-definitions = [[w.definition() for w in s] for i,s in enumerate(synsets)]
-#definitions = [[] for i,s in enumerate(synsets)]
-#definitions = [get_definition(w) for w in puzzle_words]
-for i,d in enumerate(definitions):
-    d.append(puzzle_words[i])
-
-dist_mat2 = [[0.0 for j in range(16)] for i in range(16)]
-embeddings = [model.encode(defn) for defn in definitions]
+#synsets = [wn.synsets(w) for w  in puzzle_words]
+##definitions = [get_definition(puzzle_words[i]) + [w.definition() for w in s] for i,s in enumerate(synsets)]
+#definitions = [[w.definition() for w in s] for i,s in enumerate(synsets)]
+##definitions = [[] for i,s in enumerate(synsets)]
+##definitions = [get_definition(w) for w in puzzle_words]
+#for i,d in enumerate(definitions):
+#    d.append(puzzle_words[i])
+#
+#dist_mat2 = [[0.0 for j in range(16)] for i in range(16)]
+#embeddings = [model.encode(defn) for defn in definitions]
 
 #print()
 #for d in definitions:
@@ -81,14 +82,20 @@ def find_max_position(matrix, idx):
     row_index, col_index = np.unravel_index(max_index_flat, matrix_np.shape)
     return [int(row_index), int(col_index)][idx]
 
-measured_similarities = {}
-def score_defn(key, defn, words, weights):
+#def enhance_match(x,y):
+#    if x > 0.95:
+#        return 1.0
+#    else:
+#        return x*y
+
+def score_defn(key, defn, words, weights, sim_dic):
     sim_measure = []
     for i,w in enumerate(words):
 #        key = 1
-        if key not in measured_similarities:
-            measured_similarities[key+str(i)] = cosine_similarity([defn],w)[0]
-        word_sims = measured_similarities[key+str(i)]
+        if key not in sim_dic:
+            sim_dic[key+str(i)] = cosine_similarity([defn],w)[0]
+        word_sims = sim_dic[key+str(i)]
+#        weighted_sims = [enhance_match(x,y) for x,y in zip(word_sims, weights[i])]
         weighted_sims = [x*y for x,y in zip(word_sims, weights[i])]
         best_sim = max(weighted_sims)
         sim_measure.append(best_sim)
@@ -96,15 +103,17 @@ def score_defn(key, defn, words, weights):
     sim_measure.reverse()
     best_sims = sim_measure[0:3]
     worst_sims = sim_measure[3:]
+#    if best_sims[0] > 0.95:
+#        return 1.0
     return float(np.mean(best_sims) - np.mean(worst_sims))
 
-def update_scores(defns,embeddings,scores):
+def update_scores(defns, embeddings, scores, sim_dic):
     all_scores = []
     for wi,w in enumerate(embeddings):
         defn_scores = []
         words_to_check = [item for i, item in enumerate(embeddings) if i != wi]
         for wj,w_defn in enumerate(w):
-            score = score_defn(defns[wi][wj], w_defn, words_to_check, [item for i, item in enumerate(scores) if i != wi])
+            score = score_defn(defns[wi][wj], w_defn, words_to_check, [item for i, item in enumerate(scores) if i != wi], sim_dic)
 #            score = score_defn(w_defn, words_to_check)
             defn_scores.append(score)
         norm_score = [float(i)/sum(defn_scores) for i in defn_scores]
@@ -113,17 +122,18 @@ def update_scores(defns,embeddings,scores):
         all_scores.append(list(updated_scores))
     return all_scores
 
-def get_best_defns(embeddings, definitions):
+def get_best_defns(embeddings, definitions, sim_dic):
     all_scores = [[1.0/len(defn) for d in defn] for defn in definitions]
     for i in range(25):
-        all_scores = update_scores(definitions, embeddings, all_scores)
+        all_scores = update_scores(definitions, embeddings, all_scores, sim_dic)
         best_defns = []
         for defn in all_scores:
             best_defns.append(defn.index(max(defn)))
     return best_defns
 
-def compute_dist_mat(embeddings, definitions):
-    chosen_defns = get_best_defns(embeddings, definitions) 
+def compute_dist_mat(embeddings, definitions, sim_dic):
+    dist_mat2 = [[0.0 for j in range(len(embeddings))] for i in range(len(embeddings))]
+    chosen_defns = get_best_defns(embeddings, definitions, sim_dic) 
     for wi,w in enumerate(embeddings):
         for xi,x in enumerate(embeddings):
             if xi <= wi:
@@ -166,9 +176,14 @@ def select_clusters(words, model):
     for i,d in enumerate(definitions):
         d.append(words[i])
     embeddings = [model.encode(defn) for defn in definitions]
+    sim_dic = {}
     groups = []
-    for i in range(4):
-        dist_mat2 = compute_dist_mat(embeddings, definitions)
+    for i in range(3):
+        dist_mat2 = compute_dist_mat(embeddings, definitions, sim_dic)
+        plt.matshow(dist_mat2)
+        plt.colorbar()
+        plt.title("Word Similarities defn Transformer")
+        plt.show()
         cl1 = find_closest_four(dist_mat2)
 #        dist_mat2 = [[x for i,x in enumerate(l) if i not in cl1] for li,l in enumerate(dist_mat2) if li not in cl1] #should completely recompute dist_mat here
         found_words = [w for i,w in enumerate(words) if i in cl1]
@@ -177,11 +192,12 @@ def select_clusters(words, model):
         words = [w for i,w in enumerate(words) if i not in cl1]
         embeddings = [e for i,e in enumerate(embeddings) if i not in cl1]
         definitions = [d for i,d in enumerate(definitions) if i not in cl1]
+        dist_mat2.clear()
+    print(words)
+    groups.append(words)
     return(groups)
 
 best_guess = np.array(select_clusters(puzzle_words, model))
-print()
-print(best_guess)
 
 #all_scores = [[1.0/len(defn) for d in defn] for defn in definitions]
 #for i in range(25):
@@ -351,9 +367,9 @@ print(best_guess)
 #plt.title('Embedding')
 #plt.show()
 
-plt.matshow(dist_mat2)
-plt.colorbar()
-plt.title("Word Similarities defn Transformer")
-plt.show()
+#plt.matshow(dist_mat2)
+#plt.colorbar()
+#plt.title("Word Similarities defn Transformer")
+#plt.show()
 
 
