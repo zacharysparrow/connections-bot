@@ -187,8 +187,8 @@ def flatten_off_diagonal(matrix):
     cols = len(matrix[0])
     for i in range(rows):
         for j in range(cols):
-            if i > j:
-                ret.append(matrix[i][j])# Process element at (i, j)
+            if i < j:
+                ret.append(matrix[i][j])
     return np.array(ret)
 
 def make_fake_constraints(n_words): #taking convention that bl and bu are 0
@@ -234,12 +234,17 @@ def find_closest_four(my_dist_mat, wrong_groups, close_groups): #converting to M
     u = np.array([1.0 for i in range(len(c_vec))])
     need_int = np.array([1.0 for i in range(len(c_vec))])
     solution = milp(c_vec, integrality=need_int, bounds=Bounds(lb=l,ub=u), constraints=LinearConstraint(a_mat, lb=bl, ub=bu))
-    print(solution)
     test = x_sum_rule.copy()
-    test[[4,5,6,7,8,9,10,11,12,13,14,15]] = 0.0
-    test[[16,17,18,31,32,45]] = 1.0
-    print(np.dot(c_vec,test))
-    return [i for i,a in enumerate(solution.x) if a == 1 and i < 16]
+#    test[[4,5,6,7,8,9,10,11,12,13,14,15]] = 0.0
+#    test[[16,17,18,31,32,45]] = 1.0
+#    print(np.dot(c_vec,test))
+#    test[[2,3,6,7,8,9,10,11,12,13,14,15]] = 0.0
+#    test[[16,19,20,33,34,45+25]] = 1.0 
+#    print(np.dot(c_vec,test))
+    x = [i for i,a in enumerate(solution.x) if a > 0.99 and i < 16]
+#    print(np.dot(np.dot(np.array(solution.x[0:16]).T,P),np.array(solution.x[0:16])))
+#    print(np.dot(np.dot(np.array([1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]).T,P),np.array([1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0])))
+    return x #Something wrong with c_vec -- optimizing finds the optimum I'm giving it, but that clearly isn't the solution we want
 
 def select_clusters(words, model):
     synsets = [wn.synsets(w) for w in words]
