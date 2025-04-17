@@ -13,38 +13,19 @@ Strategy:
 - (x) Use definitions with maximum similarity between words for word similarities
 	- want to choose only one definition for each word, possibly cluster definitions first
 	- choose defn that makes the tightest clusters with as much separation as possible between clusters (modularity or silhouette)
-- Cluster words into groups of 4 based on similarity scores
+- (x) Cluster words into groups of 4 based on similarity scores
 
-Clustering seems to be the most room for improvement
-Best strategy is likely NOT finding the best clusters -- start with clusters that are more certain, and work from there.
-- Need each cluster to have 4 members
-- Need to be able to update clusters given additional info (e.g. "one away..." or not)
-- Update clusters when a guess is successful
-- Likely want more greedy clustering -- if points are close they are very likely to be related, we don't want purple guesses messing up yellow
 
-Possible algorithm:
-- initialize definitions and clustering
-- for the least happy member, can you improve overall score by swapping with another word with both words (possibly) changing definition?
-- repeat last step until no swaps available
-- initialize with greedy algorithm? group closest points, next closest, etc..
--- or --
-- cluster
-- recompute best defns
-- repeat
+** Most room for improvement is in choosing word definitions
+- can use information like 3 away to refine definitions after wrong guess? Something like, "if we got the last guess wrong, we should reconsider how we interpret some words"
+- can brute force all definitions when down to last 2 connections?
+- need a refined definition picking algorithm, current one is greedy (can try simulated annealing if we want to get something working, regardless of speed, or formulate as 0-1 integer program?).
+- Dictionary clearly missing some relevant definitions, mostly informal ones. A way to build in Wiki lookups?
 
-can view choosing a defnition as having a large pool of (n\_word)\*(n\_def) words with the additional constraint that only one word of a group (corresponding to the different defns a word can have) can be chosen for the 4x4 groups.
+** Other improvements
+- fine-tune LLM using semi-supervised clustering/metric learning techniques
 
-Dependent on the relevent definitions actually being in our dictionary... not good for informal uses
-
-fine-tune LLM using semi-supervised clustering/metric learning techniques
-
-post-processing after clustering to form most likely guess?
 
 TODO:
-- implement responses to wrong guesses, can be done with pairwise include/do not include constraints
-	- if 3 are right kick out each word 1-by-1 and look at best cluster for each of those
-	- if no response, you can't have 3 of those in that set together again
-	- when we get down to 2 groups can we brute force it?
-	- simulated annealing?
 - scrape puzzles
 - format puzzle database

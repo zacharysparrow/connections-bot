@@ -18,8 +18,6 @@ from cluster_equal_size import cluster_equal_size_mincostmaxflow
 #from freedictionaryapi.clients.sync_client import DictionaryApiClient
 #from sentence_transformers.cross_encoder import CrossEncoder
 from sklearn.cluster import SpectralClustering
-import cvxpy as cp
-from numpy.linalg import eig
 
 large_width = 400
 np.set_printoptions(linewidth=large_width)
@@ -307,14 +305,15 @@ def select_clusters(words, model):
             if lives_left == 0:
                 print("Better luck next time!")
                 quit()
-            print("Oops! Remaining tries: "+str(lives_left))
+            print("Remaining tries: "+str(lives_left))
         elif user_input == '3':
             lives_left -= 1
             close_groups.append(found_words)
             if lives_left == 0:
                 print("Better luck next time!")
                 quit()
-            print("Hmm... Remaining tries: "+str(lives_left))
+            print("Remaining tries: "+str(lives_left))
+        print()
     groups.append(words)
     print()
     print("These are your connections!")
