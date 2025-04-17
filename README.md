@@ -34,14 +34,16 @@ Possible algorithm:
 
 can view choosing a defnition as having a large pool of (n\_word)\*(n\_def) words with the additional constraint that only one word of a group (corresponding to the different defns a word can have) can be chosen for the 4x4 groups.
 
-if the defn matches exactly with another word, that's almost certainly the right one
-
 Dependent on the relevent definitions actually being in our dictionary... not good for informal uses
 
 fine-tune LLM using semi-supervised clustering/metric learning techniques
 
 post-processing after clustering to form most likely guess?
 
-Data TODO:
+TODO:
+- implement responses to wrong guesses
+	- if 3 are right, remove least coherent word and add next most likely, keep track of guesses
+	- if no response, you can't have 3 of those in that set together again
+	- when we get down to 2 groups can we brute force it?
 - scrape puzzles
 - format puzzle database
