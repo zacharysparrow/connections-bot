@@ -215,7 +215,7 @@ def make_fake_constraints(n_words): #taking convention that bl and bu are 0
                 fake_var_pos += 1
     return bu, bl, a_mat
 
-def find_closest_four(my_dist_mat, wrong_groups, close_groups): #converting to MILP to solve with scipy.optimize (using their notation for function inputs
+def find_closest_four(puzzle_words, my_dist_mat, wrong_groups, close_groups): #converting to MILP to solve with scipy.optimize (using their notation for function inputs
     
     n_words = len(my_dist_mat)
     P = np.array(my_dist_mat)
@@ -225,11 +225,28 @@ def find_closest_four(my_dist_mat, wrong_groups, close_groups): #converting to M
     x_sum_rule = np.append(x_sum_rule,x_fake_sum_rule) #first n_words are the variables we care about, rest are just for the optiization
     c_vec_fake = flatten_off_diagonal(P)
     c_vec = -2*np.append(c_vec,c_vec_fake)
-    #need to add constraints to fake x
     bu, bl, a_mat = make_fake_constraints(n_words)
-    a_mat = np.vstack([a_mat,x_sum_rule])
+    a_mat = np.vstack([a_mat,x_sum_rule]) 
     bl = np.append(bl,[4.])
     bu = np.append(bu,[4.])
+    for g in wrong_groups:
+        new_row = np.array([0.0 for i in a_mat[0]])
+        for w in g:
+            word_index = puzzle_words.index(w)
+            if isinstance(word_index,int):
+                new_row[word_index] = 1.0
+        a_mat = np.vstack([a_mat,new_row])
+        bl = np.append(bl,[2.])
+        bu = np.append(bu,[0.])
+    for g in close_groups:
+        new_row = np.array([0.0 for i in a_mat[0]])
+        for w in g:
+            word_index = puzzle_words.index(w)
+            if isinstance(word_index,int):            
+                new_row[word_index] = 1.0
+        a_mat = np.vstack([a_mat,new_row])
+        bl = np.append(bl,[0.])
+        bu = np.append(bu,[3.])
     l = np.array([0.0 for i in range(len(c_vec))])
     u = np.array([1.0 for i in range(len(c_vec))])
     need_int = np.array([1.0 for i in range(len(c_vec))])
@@ -244,7 +261,7 @@ def find_closest_four(my_dist_mat, wrong_groups, close_groups): #converting to M
     x = [i for i,a in enumerate(solution.x) if a > 0.99 and i < n_words]
 #    print(np.dot(np.dot(np.array(solution.x[0:16]).T,P),np.array(solution.x[0:16])))
 #    print(np.dot(np.dot(np.array([1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]).T,P),np.array([1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0])))
-    return x #Something wrong with c_vec -- optimizing finds the optimum I'm giving it, but that clearly isn't the solution we want
+    return x 
 
 def select_clusters(words, model):
     synsets = [wn.synsets(w) for w in words]
@@ -261,13 +278,12 @@ def select_clusters(words, model):
     dist_mat2 = compute_dist_mat(embeddings, definitions, all_similarities)
     while lives_left > 0 and len(groups) < 3:
         dist_mat2 = compute_dist_mat(embeddings, definitions, all_similarities) #uncomment to update matrix
-        plt.matshow(dist_mat2)
-        plt.colorbar()
-        plt.title("Word Similarities")
-        plt.show()
-        opt_solution = find_closest_four(dist_mat2, wrong_groups, close_groups) #update this to take into account wrong groups and close groups
+#        plt.matshow(dist_mat2)
+#        plt.colorbar()
+#        plt.title("Word Similarities")
+#        plt.show()
+        opt_solution = find_closest_four(words, dist_mat2, wrong_groups, close_groups)
         cl1 = opt_solution[0:len(dist_mat2)]
-        print(cl1)
         found_words = [w for i,w in enumerate(words) if i in cl1]
         print(found_words)
         while True:
