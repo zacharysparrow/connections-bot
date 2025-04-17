@@ -41,9 +41,10 @@ fine-tune LLM using semi-supervised clustering/metric learning techniques
 post-processing after clustering to form most likely guess?
 
 TODO:
-- implement responses to wrong guesses
-	- if 3 are right, remove least coherent word and add next most likely, keep track of guesses
+- implement responses to wrong guesses, can be done with pairwise include/do not include constraints
+	- if 3 are right kick out each word 1-by-1 and look at best cluster for each of those
 	- if no response, you can't have 3 of those in that set together again
 	- when we get down to 2 groups can we brute force it?
+	- simulated annealing?
 - scrape puzzles
 - format puzzle database

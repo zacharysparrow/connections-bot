@@ -1,5 +1,8 @@
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.manifold import spectral_embedding
+from scipy.optimize import milp
+from scipy.optimize import Bounds
+from scipy.optimize import LinearConstraint
 import numpy as np
 #from sklearn.metrics.pairwise import linear_kernel
 #from sklearn.metrics.pairwise import rbf_kernel
@@ -15,6 +18,8 @@ from cluster_equal_size import cluster_equal_size_mincostmaxflow
 #from freedictionaryapi.clients.sync_client import DictionaryApiClient
 #from sentence_transformers.cross_encoder import CrossEncoder
 from sklearn.cluster import SpectralClustering
+import cvxpy as cp
+from numpy.linalg import eig
 
 large_width = 400
 np.set_printoptions(linewidth=large_width)
@@ -44,7 +49,7 @@ def read_csv(file_path):
          return []
     return data_array
 
-puzzle = read_csv("puzzles/test_puzzle_4.txt") #2,3 are easy, 1,4 are hard
+puzzle = read_csv("puzzles/test_puzzle_3.txt") #2,3 are easy, 1,4 are hard
 puzzle_words = [x.lower().strip() for xs in puzzle for x in xs]
 print(np.reshape(puzzle_words,(4,4)))
 print()
@@ -116,6 +121,7 @@ def get_best_defns(embeddings, definitions, all_similarities):
     return best_defns
 
 def compute_dist_mat(embeddings, definitions, all_similarities):
+#    epsilon = 0.000001
     dist_mat2 = [[0.0 for j in range(len(embeddings))] for i in range(len(embeddings))]
     chosen_defns = get_best_defns(embeddings, definitions, all_similarities) 
     for wi,w in enumerate(embeddings):
@@ -125,7 +131,7 @@ def compute_dist_mat(embeddings, definitions, all_similarities):
             dist_mat2[wi][xi] = all_similarities[wi][xi][chosen_defns[wi]][chosen_defns[xi]]
             dist_mat2[xi][wi] = dist_mat2[wi][xi]
     for i in range(len(dist_mat2)):
-        dist_mat2[i][i] = 1.0
+        dist_mat2[i][i] = 1.0 #+ epsilon
     return dist_mat2
 
 #dist_mat = compute_dist_mat(embeddings, definitions)
@@ -144,25 +150,120 @@ def find_closest_four(my_dist_mat):
         i += 1
     return(np.argsort(my_dist_mat[best_idx_a])[-4:])
 
+#def find_closest_four(my_dist_mat, wrong_groups, close_groups): #update with cvxpy
+#    P = np.array(my_dist_mat)
+#    P = (P + P.T)/2
+#    q = np.array([[0.] for i in my_dist_mat])
+#    G = np.array([[0. for i in row] for row in my_dist_mat]) #build using info about groups
+#    h = q #see note about G
+#    A = np.array([1.0 for i in my_dist_mat])
+#    b = np.array([4.])
+#    lb = np.array([[0.] for i in my_dist_mat])
+#    ub = np.array([[1.] for i in my_dist_mat])
+#    print(["p","q","G","h","A","b","lb","ub"])
+#    print([P.shape,q.shape,G.shape,h.shape,A.shape,b.shape,lb.shape,ub.shape])
+##    x = solve_qp(P, q, G=G, h=h, A=A, b=b, lb=lb, ub=ub, solver="osqp")
+#    x = solve_qp(P, q, A=A, b=b, lb=lb, ub=ub, solver="scs")
+#    return x
+
+def find_closest_four(my_dist_mat, wrong_groups, close_groups): #update with cvxpy
+    
+    P = (1-np.array(my_dist_mat))**2
+#    P = np.dot(P.T, P)
+    print(P)
+    x = cp.Variable((P.shape[0], 1), boolean=True)
+    constraints = [cp.sum(x) == 4] 
+
+    loss = cp.quad_form(x, P)
+    objective = cp.Minimize(loss)
+
+    prob = cp.Problem(objective, constraints)
+    prob.solve() 
+    return [i for i,v in enumerate(x.value) if v > 0.01]
+
+def flatten_off_diagonal(matrix):
+    ret = []
+    rows = len(matrix)
+    cols = len(matrix[0])
+    for i in range(rows):
+        for j in range(cols):
+            if i > j:
+                ret.append(matrix[i][j])# Process element at (i, j)
+    return np.array(ret)
+
+def make_fake_constraints(n_words): #taking convention that bl and bu are 0
+    n_fake_vars = int((n_words**2 - n_words)/2)
+    a_mat = np.array([[0.0 for j in range(n_fake_vars+n_words)] for i in range(3*n_fake_vars)])
+    bu = np.array([0.0 for i in range(3*n_fake_vars)])
+    bl = np.array([-1.0 for i in range(3*n_fake_vars)])
+    i = 0
+    fake_var_pos = n_words
+    for v1 in range(n_words):
+        for v2 in range(n_words):
+            if v1 < v2: #i think there's something wrong here
+                a_mat[i,v1] = -1
+                a_mat[i,fake_var_pos] = 1
+                i += 1
+                a_mat[i,v2] = -1
+                a_mat[i,fake_var_pos] = 1
+                i += 1
+                a_mat[i,fake_var_pos] = 1
+                a_mat[i,v1] = -1
+                a_mat[i,v2] = -1
+#                bl[i] = -1
+                i += 1
+                fake_var_pos += 1
+    return bu, bl, a_mat
+
+def find_closest_four(my_dist_mat, wrong_groups, close_groups): #converting to MILP to solve with scipy.optimize (using their notation for function inputs
+    
+    n_words = len(my_dist_mat)
+    P = np.array(my_dist_mat)
+    x_sum_rule = np.array([1.0 for i in range(n_words)])
+    c_vec = np.array([0.0 for i in range(n_words)])
+    x_fake_sum_rule = np.array([0.0 for i in range(int((n_words**2 - n_words)/2))])
+    x_sum_rule = np.append(x_sum_rule,x_fake_sum_rule) #first n_words are the variables we care about, rest are just for the optiization
+    c_vec_fake = flatten_off_diagonal(P)
+    c_vec = -2*np.append(c_vec,c_vec_fake)
+    #need to add constraints to fake x
+    bu, bl, a_mat = make_fake_constraints(n_words)
+    a_mat = np.vstack([a_mat,x_sum_rule])
+    bl = np.append(bl,[4.])
+    bu = np.append(bu,[4.])
+    l = np.array([0.0 for i in range(len(c_vec))])
+    u = np.array([1.0 for i in range(len(c_vec))])
+    need_int = np.array([1.0 for i in range(len(c_vec))])
+    solution = milp(c_vec, integrality=need_int, bounds=Bounds(lb=l,ub=u), constraints=LinearConstraint(a_mat, lb=bl, ub=bu))
+    print(solution)
+    test = x_sum_rule.copy()
+    test[[4,5,6,7,8,9,10,11,12,13,14,15]] = 0.0
+    test[[16,17,18,31,32,45]] = 1.0
+    print(np.dot(c_vec,test))
+    return [i for i,a in enumerate(solution.x) if a == 1 and i < 16]
+
 def select_clusters(words, model):
     synsets = [wn.synsets(w) for w in words]
     definitions = [[w.definition() for w in s] for s in synsets]
     for i,d in enumerate(definitions):
         d.append(words[i])
+#        print(d)
     embeddings = [model.encode(defn) for defn in definitions]
     all_similarities = compute_sim_array(embeddings)
     groups = []
+    wrong_groups = []
+    close_groups = []
     lives_left = 4
     dist_mat2 = compute_dist_mat(embeddings, definitions, all_similarities)
     while lives_left > 0 and len(groups) < 3:
         dist_mat2 = compute_dist_mat(embeddings, definitions, all_similarities) #uncomment to update matrix
         plt.matshow(dist_mat2)
         plt.colorbar()
-        plt.title("Word Similarities defn Transformer")
+        plt.title("Word Similarities")
         plt.show()
-        cl1 = find_closest_four(dist_mat2)
+        opt_solution = find_closest_four(dist_mat2, wrong_groups, close_groups) #update this to take into account wrong groups and close groups
+        cl1 = opt_solution[0:len(dist_mat2)]
+        print(cl1)
         found_words = [w for i,w in enumerate(words) if i in cl1]
-
         print(found_words)
         while True:
             user_input = input("Is this a valid connection? (y/n/3)")
@@ -181,12 +282,14 @@ def select_clusters(words, model):
             all_similarities = [[k for i,k in enumerate(s) if i not in cl1] for j,s in enumerate(all_similarities) if j not in cl1]
         elif user_input == 'n':
             lives_left -= 1
+            wrong_groups.append(found_words)
             if lives_left == 0:
                 print("Better luck next time!")
                 quit()
             print("Oops! Remaining tries: "+str(lives_left))
         elif user_input == '3':
             lives_left -= 1
+            close_groups.append(found_words)
             if lives_left == 0:
                 print("Better luck next time!")
                 quit()
