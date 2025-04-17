@@ -241,7 +241,7 @@ def find_closest_four(my_dist_mat, wrong_groups, close_groups): #converting to M
 #    test[[2,3,6,7,8,9,10,11,12,13,14,15]] = 0.0
 #    test[[16,19,20,33,34,45+25]] = 1.0 
 #    print(np.dot(c_vec,test))
-    x = [i for i,a in enumerate(solution.x) if a > 0.99 and i < 16]
+    x = [i for i,a in enumerate(solution.x) if a > 0.99 and i < n_words]
 #    print(np.dot(np.dot(np.array(solution.x[0:16]).T,P),np.array(solution.x[0:16])))
 #    print(np.dot(np.dot(np.array([1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]).T,P),np.array([1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0])))
     return x #Something wrong with c_vec -- optimizing finds the optimum I'm giving it, but that clearly isn't the solution we want
