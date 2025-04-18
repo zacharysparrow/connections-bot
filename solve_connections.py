@@ -1,25 +1,23 @@
-import time
+#import time
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.manifold import spectral_embedding
-from scipy.optimize import milp
-from scipy.optimize import Bounds
-from scipy.optimize import LinearConstraint
+#from sklearn.manifold import spectral_embedding
+#from scipy.optimize import milp
+#from scipy.optimize import Bounds
+#from scipy.optimize import LinearConstraint
 import numpy as np
 #from sklearn.metrics.pairwise import linear_kernel
 #from sklearn.metrics.pairwise import rbf_kernel
 import csv
-import random
-from collections import defaultdict
 from itertools import combinations
 import matplotlib.pyplot as plt
 #import fasttext.util
 from nltk.corpus import wordnet as wn
 from sentence_transformers import SentenceTransformer
-from sklearn.manifold import MDS
-from cluster_equal_size import cluster_equal_size_mincostmaxflow
+#from sklearn.manifold import MDS
+#from cluster_equal_size import cluster_equal_size_mincostmaxflow
 #from freedictionaryapi.clients.sync_client import DictionaryApiClient
 #from sentence_transformers.cross_encoder import CrossEncoder
-from sklearn.cluster import SpectralClustering
+#from sklearn.cluster import SpectralClustering
 
 large_width = 400
 np.set_printoptions(linewidth=large_width)
@@ -49,7 +47,7 @@ def read_csv(file_path):
          return []
     return data_array
 
-puzzle = read_csv("puzzles/test_puzzle_3.txt") #2,3 are easy, 1,4 are hard
+puzzle = read_csv("puzzles/test_puzzle_4.txt") #3 is easy, 2 is medium, 1,4 are hard
 puzzle_words = [x.lower().strip() for xs in puzzle for x in xs]
 print(np.reshape(puzzle_words,(4,4)))
 print()
@@ -284,7 +282,7 @@ def make_sim_mat(embeddings, definitions):
     low_idx = 0
     high_idx = 0
     for i,d in enumerate(definitions):
-        new_diag = 2*np.eye(len(d)) - np.ones((len(d),len(d)))
+        new_diag = np.eye(len(d))#2*np.eye(len(d)) - np.ones((len(d),len(d)))
         high_idx += len(d) 
         sim_mat[low_idx:high_idx,low_idx:high_idx] = new_diag
         low_idx = high_idx
@@ -305,8 +303,7 @@ def enumerate_groups(sim_mat): #add constraints
     n_points = len(sim_mat)
     result = {}
     for i in combinations(range(n_points),4):
-        curr_sim = np.sum(sim_mat[np.ix_(i,i)])
-        result[i] = curr_sim
+        result[i] = np.sum(sim_mat[np.ix_(i,i)])
     return result
 
 def select_clusters(words, model):
@@ -317,6 +314,7 @@ def select_clusters(words, model):
 #        print(d)
 #    n_defn = [len(definitions[i]) for i,w in enumerate(words)]
     working_words = [item for sublist in definitions for item in sublist]
+    print(len(working_words))
     working_word_to_word = [i for i,w in enumerate(words) for j in definitions[i]]
     word_to_working_word = [[] for i in range(len(words))]
     counter = 0
@@ -327,14 +325,28 @@ def select_clusters(words, model):
 #    print(word_to_working_word)
     embeddings = model.encode(working_words)
     sim_mat = make_sim_mat(embeddings, definitions)
+#    sim_mat = sim_mat - np.eye(len(sim_mat))
+#    for i,row in enumerate(sim_mat):
+#        idx = len(sim_mat) - i
+#        row_max = max(row)
+#        if row_max < 0.3 and len(working_words[idx]) > 15:
+#            sim_mat = np.delete(sim_mat, idx, axis=0)
+#            sim_mat = np.delete(sim_mat, idx, axis=1)
+
+    plt.matshow(sim_mat)
+    plt.colorbar()
+    plt.title("All Similarities")
+    plt.show()
+#    for row in sim_mat:
+#        print([float(np.mean(row)),float(max(row))])
+#    return "done"
     all_groups = enumerate_groups(sim_mat)
     sorted_keys = sorted(all_groups, key=all_groups.get, reverse=True)
-    print([sorted_keys[i] for i in range(10)])
     groups = []
     wrong_groups = []
     close_groups = []
     lives_left = 4
-    while lives_left > 0 and len(words) > 4:
+    while lives_left > 0 and len(groups) < 4:
 #        sim_mat = make_sim_mat(embeddings, definitions) #want to remove at some point
 #        plt.matshow(sim_mat)
 #        plt.colorbar()
@@ -347,6 +359,8 @@ def select_clusters(words, model):
         cl1 = [working_word_to_word[i] for i in opt_solution]
         found_words = [w for i,w in enumerate(words) if i in cl1]
         print(found_words)
+        if len(found_words) != 4:
+            raise Exception("I messed up somewhere!")
         #filter out possibilities from sorted kerys here without changing order, no need to update anything
         while True:
             user_input = input("Is this a valid connection? (y/n/3)")
@@ -360,6 +374,8 @@ def select_clusters(words, model):
             defns_to_remove = [item for sublist in defns_to_remove for item in sublist]
             groups.append(found_words)
             sorted_keys = [k for k in sorted_keys if not any(i in defns_to_remove for i in k)]
+            if sorted_keys == []:
+                break
 #            print(len(sorted_keys))
 #            words = [w for i,w in enumerate(words) if i not in cl1]
 #            working_words = [w for i,w in enumerate(working_words) if i not in defns_to_remove]
@@ -379,6 +395,7 @@ def select_clusters(words, model):
         elif user_input == 'n':
             lives_left -= 1
             wrong_groups.append(found_words)
+            sorted_keys = [k for k in sorted_keys if sum(i in opt_solution for i in k) <= 2]
             if lives_left == 0:
                 print("Better luck next time!")
                 quit()
@@ -386,18 +403,17 @@ def select_clusters(words, model):
         elif user_input == '3':
             lives_left -= 1
             close_groups.append(found_words)
+            sorted_keys = [k for k in sorted_keys if sum(i in opt_solution for i in k) % 2 == 1]
             if lives_left == 0:
                 print("Better luck next time!")
                 quit()
             print("Remaining tries: "+str(lives_left))
         print()
-    groups.append(words)
     print()
     print("These are your connections!")
     print(np.array(groups))
     return(groups)
 
-print(puzzle_words)
 #best_guess = np.array(select_clusters(puzzle_words, model))
 #puzzle_words.sort()
 #print(puzzle_words)
