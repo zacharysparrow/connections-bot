@@ -19,7 +19,8 @@ Strategy:
 ** Most room for improvement is in choosing word definitions
 - can use information like 3 away to refine definitions after wrong guess? Something like, "if we got the last guess wrong, we should reconsider how we interpret some words"
 - can brute force all definitions when down to last 2 connections?
-- need a refined definition picking algorithm, current one is greedy (can try simulated annealing if we want to get something working, regardless of speed, or formulate as 0-1 integer program?).
+- need a refined definition picking algorithm, current one is greedy (can try simulated annealing if we want to get something working, regardless of speed?).
+- can build in definition picking into the MILP by introducing pairwise do-not-group constraints between definitions, careful to remove all definitions once a word is removed from the pool
 - Dictionary clearly missing some relevant definitions, mostly informal ones. A way to build in Wiki lookups?
 
 ** Other improvements
