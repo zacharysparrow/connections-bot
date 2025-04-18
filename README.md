@@ -26,6 +26,8 @@ Strategy:
 ** Other improvements
 - fine-tune LLM using semi-supervised clustering/metric learning techniques
 
+BUGS:
+- distance matrix depends on order of input...
 
 TODO:
 - scrape puzzles

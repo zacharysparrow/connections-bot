@@ -7,7 +7,6 @@ import numpy as np
 #from sklearn.metrics.pairwise import linear_kernel
 #from sklearn.metrics.pairwise import rbf_kernel
 import csv
-import random
 from collections import defaultdict
 from itertools import combinations
 import matplotlib.pyplot as plt
@@ -57,11 +56,11 @@ model = SentenceTransformer("all-MiniLM-L6-v2")
 #model = CrossEncoder("cross-encoder/stsb-distilroberta-base")
 #model = CrossEncoder("cross-encoder/stsb-TinyBERT-L4")
 
-#def find_max_position(matrix, idx):
-#    matrix_np = np.array(matrix)
-#    max_index_flat = np.argmax(matrix_np)
-#    row_index, col_index = np.unravel_index(max_index_flat, matrix_np.shape)
-#    return [int(row_index), int(col_index)][idx]
+def find_max_position(matrix, idx):
+    matrix_np = np.array(matrix)
+    max_index_flat = np.argmax(matrix_np)
+    row_index, col_index = np.unravel_index(max_index_flat, matrix_np.shape)
+    return [int(row_index), int(col_index)][idx]
 
 #def enhance_match(x,y):
 #    if x > 0.95:
@@ -133,12 +132,52 @@ def compute_dist_mat(embeddings, definitions, all_similarities):
         dist_mat2[i][i] = 1.0 #+ epsilon
     return dist_mat2
 
+#dist_mat = compute_dist_mat(embeddings, definitions)
 
+def find_closest_four(my_dist_mat):
+    curr_best_dist = -10
+    best_idx_a = 0
+    for i in range(len(my_dist_mat)):
+        curr_row = my_dist_mat[i].copy()
+        curr_row.sort()
+        curr_row.reverse()
+        curr_score = np.mean(curr_row[0:4])
+        if curr_score > curr_best_dist:
+            curr_best_dist = curr_score
+            best_idx_a = i
+        i += 1
+    return(np.argsort(my_dist_mat[best_idx_a])[-4:])
 
+#def find_closest_four(my_dist_mat, wrong_groups, close_groups): #update with cvxpy
+#    P = np.array(my_dist_mat)
+#    P = (P + P.T)/2
+#    q = np.array([[0.] for i in my_dist_mat])
+#    G = np.array([[0. for i in row] for row in my_dist_mat]) #build using info about groups
+#    h = q #see note about G
+#    A = np.array([1.0 for i in my_dist_mat])
+#    b = np.array([4.])
+#    lb = np.array([[0.] for i in my_dist_mat])
+#    ub = np.array([[1.] for i in my_dist_mat])
+#    print(["p","q","G","h","A","b","lb","ub"])
+#    print([P.shape,q.shape,G.shape,h.shape,A.shape,b.shape,lb.shape,ub.shape])
+##    x = solve_qp(P, q, G=G, h=h, A=A, b=b, lb=lb, ub=ub, solver="osqp")
+#    x = solve_qp(P, q, A=A, b=b, lb=lb, ub=ub, solver="scs")
+#    return x
 
+def find_closest_four(my_dist_mat, wrong_groups, close_groups): #update with cvxpy
+    
+    P = (1-np.array(my_dist_mat))**2
+#    P = np.dot(P.T, P)
+    print(P)
+    x = cp.Variable((P.shape[0], 1), boolean=True)
+    constraints = [cp.sum(x) == 4] 
 
+    loss = cp.quad_form(x, P)
+    objective = cp.Minimize(loss)
 
-
+    prob = cp.Problem(objective, constraints)
+    prob.solve() 
+    return [i for i,v in enumerate(x.value) if v > 0.01]
 
 def flatten_off_diagonal(matrix):
     ret = []
@@ -174,7 +213,8 @@ def make_fake_constraints(n_words): #taking convention that bl and bu are 0
                 fake_var_pos += 1
     return bu, bl, a_mat
 
-def find_closest_four(puzzle_words, my_dist_mat, wrong_groups, close_groups, word_to_working_word, working_word_to_word): 
+def find_closest_four(puzzle_words, my_dist_mat, wrong_groups, close_groups): #converting to MILP to solve with scipy.optimize (using their notation for function inputs
+    
     n_words = len(my_dist_mat)
     P = np.array(my_dist_mat)
     x_sum_rule = np.array([1.0 for i in range(n_words)])
@@ -183,11 +223,11 @@ def find_closest_four(puzzle_words, my_dist_mat, wrong_groups, close_groups, wor
     x_sum_rule = np.append(x_sum_rule,x_fake_sum_rule) #first n_words are the variables we care about, rest are just for the optiization
     c_vec_fake = flatten_off_diagonal(P)
     c_vec = -2*np.append(c_vec,c_vec_fake)
-    bu, bl, a_mat = make_fake_constraints(n_words) #translate binary quadratic program to mixed integer linear program
-    a_mat = np.vstack([a_mat,x_sum_rule]) #restrict guesses to exactly 4 words
+    bu, bl, a_mat = make_fake_constraints(n_words)
+    a_mat = np.vstack([a_mat,x_sum_rule]) 
     bl = np.append(bl,[4.])
     bu = np.append(bu,[4.])
-    for g in wrong_groups: #resctrict guesses to not be too similar to previous wrong guesses
+    for g in wrong_groups:
         new_row = np.array([0.0 for i in a_mat[0]])
         for w in g:
             word_index = puzzle_words.index(w)
@@ -196,7 +236,7 @@ def find_closest_four(puzzle_words, my_dist_mat, wrong_groups, close_groups, wor
         a_mat = np.vstack([a_mat,new_row])
         bl = np.append(bl,[0.])
         bu = np.append(bu,[2.])
-    for g in close_groups: #restrict guesses using info about close guesses: guesses using close group members can have no more than 3 close group members
+    for g in close_groups:
         new_row = np.array([0.0 for i in a_mat[0]])
         for w in g:
             word_index = puzzle_words.index(w)
@@ -205,27 +245,11 @@ def find_closest_four(puzzle_words, my_dist_mat, wrong_groups, close_groups, wor
         a_mat = np.vstack([a_mat,new_row])
         bl = np.append(bl,[3.])
         bu = np.append(bu,[3.])
-#    for g in close_groups: #restrict guesses using info about close guesses: new groups should have at most one member of close group -- only way to include is nonlinear and this doesn't happen much in practice
-#        new_row = np.array([0.0 for i in a_mat[0]])
-#        not_g = [i for i in range(n_words) if i not in g]
-#        for w in not_g:
-#            word_index = puzzle_words.index(w)
-#            if isinstance(word_index,int):            
-#                new_row[word_index] = 1.0
-#        a_mat = np.vstack([a_mat,new_row])
-#        bl = np.append(bl,[3.])
-#        bu = np.append(bu,[4.])
-    for restriction in word_to_working_word:
-        new_row = np.array([0.0 for i in a_mat[0]])
-        new_row[restriction] = 1.0
-        a_mat = np.vstack([a_mat,new_row])
-        bl = np.append(bl,[0.])
-        bu = np.append(bu,[1.])
     l = np.array([0.0 for i in range(len(c_vec))])
     u = np.array([1.0 for i in range(len(c_vec))])
     need_int = np.array([1.0 for i in range(len(c_vec))])
     solution = milp(c_vec, integrality=need_int, bounds=Bounds(lb=l,ub=u), constraints=LinearConstraint(a_mat, lb=bl, ub=bu))
-    print(solution)
+#    print(solution)
 #    test = x_sum_rule.copy()
 #    test[[4,5,6,7,8,9,10,11,12,13,14,15]] = 0.0
 #    test[[16,17,18,31,32,45]] = 1.0
@@ -234,73 +258,31 @@ def find_closest_four(puzzle_words, my_dist_mat, wrong_groups, close_groups, wor
 #    test[[16,19,20,33,34,45+25]] = 1.0 
 #    print(np.dot(c_vec,test))
     x = [i for i,a in enumerate(solution.x) if a > 0.99 and i < n_words]
-    print(x)
-    actual_words = [working_word_to_word[i] for i in x]
-    print(actual_words)
 #    print(np.dot(np.dot(np.array(solution.x[0:16]).T,P),np.array(solution.x[0:16])))
 #    print(np.dot(np.dot(np.array([1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]).T,P),np.array([1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0])))
-    return x, solution.fun 
-
-#def permute_matrix(matrix, permutation):
-#    permuted_matrix = matrix[permutation, :]
-#    permuted_matrix = permuted_matrix[:, permutation]
-#    return permuted_matrix
-#
-#def search_connections(puzzle_words, my_dist_mat, wrong_groups, close_groups, word_to_working_word, working_word_to_word):
-#    word_shuffles = []
-#    permutations = []
-#    for i in range(1):
-#        shuffle_list = [int(i) for i in range(len(puzzle_words))]
-#        random.shuffle(shuffle_list)
-#        permutations.append(list(shuffle_list))
-#        word_shuffles.append([puzzle_words[i] for i in shuffle_list])
-#    solutions = []
-#    costs = []
-#    for p,l in zip(permutations,word_shuffles):
-#        soln,cost = find_closest_four(l, permute_matrix(np.array(my_dist_mat),p), wrong_groups, close_groups, word_to_working_word, working_word_to_word)
-#        solutions.append(soln)
-#        costs.append(cost)
-#    min_index, min_value = min((idx, val) for (idx, val) in enumerate(costs))
-#    final_guess = solutions[min_index]
-#    final_idx = []
-#    for g in final_guess:
-#        guess_word = word_shuffles[min_index][g]
-#        word_index = puzzle_words.index(guess_word)
-#        final_idx.append(word_index)
-#    return final_idx
+    return x 
 
 def select_clusters(words, model):
     synsets = [wn.synsets(w) for w in words]
-    definitions = [[w.definition() for w in s] for i,s in enumerate(synsets)]
+    definitions = [[w.definition() for w in s] for s in synsets]
     for i,d in enumerate(definitions):
         d.append(words[i])
 #        print(d)
-#    n_defn = [len(definitions[i]) for i,w in enumerate(words)]
-    working_words = [item for sublist in definitions for item in sublist]
-    working_word_to_word = [i for i,w in enumerate(words) for j in definitions[i]]
-    word_to_working_word = [[] for i in range(len(words))]
-    counter = 0
-    for i,w in enumerate(words):
-        for d in definitions[i]:
-            word_to_working_word[i].append(counter)
-            counter += 1
-#    print(word_to_working_word)
-    embeddings = model.encode(working_words)
-
-#    sim_mat = cosine_similarity(embeddings) #want to compute this once -- uncomment when updating matrix works
+    embeddings = [model.encode(defn) for defn in definitions]
+    all_similarities = compute_sim_array(embeddings)
     groups = []
     wrong_groups = []
     close_groups = []
     lives_left = 4
-    while lives_left > 0 and len(words) > 4:
-        sim_mat = cosine_similarity(embeddings) #want to remove at some point
-        plt.matshow(sim_mat)
-        plt.colorbar()
-        plt.title("All Similarities")
-        plt.show()
-#        opt_solution = search_connections(working_words, sim_mat, wrong_groups, close_groups, word_to_working_word, working_word_to_word)
-        opt_solution, solution_cost = find_closest_four(working_words, sim_mat, wrong_groups, close_groups, word_to_working_word, working_word_to_word)
-        cl1 = [working_word_to_word[i] for i in opt_solution]
+    dist_mat2 = compute_dist_mat(embeddings, definitions, all_similarities)
+    while lives_left > 0 and len(groups) < 3:
+        dist_mat2 = compute_dist_mat(embeddings, definitions, all_similarities) #uncomment to update matrix
+#        plt.matshow(dist_mat2)
+#        plt.colorbar()
+#        plt.title("Word Similarities")
+#        plt.show()
+        opt_solution = find_closest_four(words, dist_mat2, wrong_groups, close_groups)
+        cl1 = opt_solution[0:len(dist_mat2)]
         found_words = [w for i,w in enumerate(words) if i in cl1]
         print(found_words)
         while True:
@@ -310,18 +292,14 @@ def select_clusters(words, model):
             else:
                 print("Please enter a valid input. (y/n/3)")
                 continue
-        if user_input == 'y': #need to update working_words_to_word, word_to_working_word, sim_mat
-            defns_to_remove = [word_to_working_word[i] for i,w in enumerate(found_words)]
-            defns_to_remove = [item for sublist in defns_to_remove for item in sublist]
+        if user_input == 'y':
             groups.append(found_words)
+#            dist_mat2 = [[x for i,x in enumerate(l) if i not in cl1] for li,l in enumerate(dist_mat2) if li not in cl1] #uncomment to not update dist_mat 
             words = [w for i,w in enumerate(words) if i not in cl1]
-            working_words = [w for i,w in enumerate(working_words) if i not in defns_to_remove]
-            working_word_to_word = [w for i,w in enumerate(working_word_to_word) if i not in defns_to_remove]
-            word_to_working_word = [w for i,w in enumerate(word_to_working_word) if i not in cl1]
-            embeddings = [e for i,e in enumerate(embeddings) if i not in defns_to_remove]
+            embeddings = [e for i,e in enumerate(embeddings) if i not in cl1]
             definitions = [d for i,d in enumerate(definitions) if i not in cl1]
-            #better to update sim_mat here by dropping rows/columns than recomputing above
-#            all_similarities = [[k for i,k in enumerate(s) if i not in cl1] for j,s in enumerate(all_similarities) if j not in cl1]
+            dist_mat2.clear() #uncomment to update matrix
+            all_similarities = [[k for i,k in enumerate(s) if i not in cl1] for j,s in enumerate(all_similarities) if j not in cl1]
         elif user_input == 'n':
             lives_left -= 1
             wrong_groups.append(found_words)
@@ -343,11 +321,7 @@ def select_clusters(words, model):
     print(np.array(groups))
     return(groups)
 
-print(puzzle_words)
-#best_guess = np.array(select_clusters(puzzle_words, model))
-#puzzle_words.sort()
-#print(puzzle_words)
-best_guess = np.array(select_clusters(puzzle_words[0:8], model))
+best_guess = np.array(select_clusters(puzzle_words, model))
 #all_scores = [[1.0/len(defn) for d in defn] for defn in definitions]
 #for i in range(25):
 #    all_scores = update_scores(definitions, embeddings, all_scores)
