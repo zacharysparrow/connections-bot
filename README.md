@@ -26,9 +26,14 @@ Strategy:
 ** Other improvements
 - fine-tune LLM using semi-supervised clustering/metric learning techniques
 
-BUGS:
-- distance matrix depends on order of input...
 
 TODO:
 - scrape puzzles
 - format puzzle database
+
+get sim mat
+compute all group combos
+sort by score
+find best one
+filter groups by constraints
+repeat
