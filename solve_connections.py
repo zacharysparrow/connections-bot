@@ -474,4 +474,4 @@ def select_clusters(words, model, n_defns):
 test_words = puzzle_words.copy()
 #test_words = puzzle_words[0:8].copy()
 #test_words.sort()
-best_guess = np.array(select_clusters(test_words, model, 3))
+best_guess = np.array(select_clusters(test_words, model, 5))
