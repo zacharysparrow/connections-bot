@@ -3,7 +3,6 @@ Bot for solving the NYT Connections puzzles
 
 Stack:
 - python
-- fasttext
 
 Strategy:
 - (x) Look up the definition(s) of each word
@@ -16,21 +15,16 @@ Strategy:
 
 ** Most room for improvement is in choosing word definitions
 - Brute force works, but is too slow. Can speed up by
-	- clustering definitions
 	- faster code
 	- filtering out definitions that have low similarity scores
-	- Explicitly exclude connections that contain two definitions from the same word
 	- Identify pairs of points that are too far apart to be connected and don't iterate through those
-	- Greedy Approach (as described before): This remains a very efficient option. Start with the closest pair, then iteratively add the point that best reduces the average distance of the growing set. While not guaranteed to be optimal, it's fast.
-	- Cluster everything with fixed cluster size = 4, then pick the best of the lot that satisfies constraints?
-- Dictionary clearly missing some relevant definitions, mostly informal ones. A way to build in Wiki lookups?
+- Dictionary clearly missing some relevant definitions, mostly informal ones. A way to build in Wiki lookups, expand dictionary?
 
 ** Other improvements
 - fine-tune LLM using semi-supervised clustering/metric learning techniques
 
 
 TODO:
-- some bug in selecting best group still
 - scrape puzzles
 - format puzzle database
 
