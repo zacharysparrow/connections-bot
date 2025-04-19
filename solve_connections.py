@@ -48,7 +48,7 @@ def read_csv(file_path):
          return []
     return data_array
 
-puzzle = read_csv("puzzles/test_puzzle_1.txt") #3 is easy, 2 is medium, 1,4 are hard
+puzzle = read_csv("puzzles/test_puzzle_5.txt") #3 is easy, 2 is medium, 1,4 are hard
 puzzle_words = [x.lower().strip() for xs in puzzle for x in xs]
 print(np.reshape(puzzle_words,(4,4)))
 print()
@@ -367,6 +367,7 @@ def select_clusters(words, model, n_defns):
         definitions.append(chosen_defns)
 #    n_defn = [len(definitions[i]) for i,w in enumerate(words)]
     working_words = [item for sublist in definitions for item in sublist]
+    print(len(working_words))
     working_word_to_word = [i for i,w in enumerate(words) for j in definitions[i]]
     word_to_working_word = [[] for i in range(len(words))]
     counter = 0
@@ -451,6 +452,8 @@ def select_clusters(words, model, n_defns):
             wrong_groups.append(found_words)
             sorted_keys = [k for k in sorted_keys if sum(words[working_word_to_word[i]] in found_words for i in k) <= 2]
             if lives_left == 0:
+                print()
+                print("I found "+str(len(groups))+"/4 connections.")
                 print("Better luck next time!")
                 quit()
             print("Remaining tries: "+str(lives_left))
@@ -459,6 +462,8 @@ def select_clusters(words, model, n_defns):
             close_groups.append(found_words)
             sorted_keys = [k for k in sorted_keys if (sum(words[working_word_to_word[i]] in found_words for i in k) in set([0,1,3]))]
             if lives_left == 0:
+                print()
+                print("I found "+str(len(groups))+"/4 connections.")
                 print("Better luck next time!")
                 quit()
             print("Remaining tries: "+str(lives_left))

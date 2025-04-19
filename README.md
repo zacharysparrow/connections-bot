@@ -13,10 +13,9 @@ Stack:
 - Dictionary clearly missing some relevant definitions, mostly informal ones. A way to build in Wiki lookups, expand dictionary?
 	- https://en.wiktionary.org/api/rest_v1/#/Page%20content/get_page_definition__term_
 - Want some heuristic to find most likely definitions to be used
-
-** Other improvements
-- fine-tune LLM using semi-supervised clustering/metric learning techniques
-- https://arxiv.org/pdf/2405.16153	https://github.com/ryuliuxiaodong/DefSent-Plus
+- Example sentence + contextual word embedding
+- Search for sentences in corpus containing word, contextual embedding of word for each example, QR factorization or clustering to thin results
+	- https://en.wiktionary.org/wiki/ghost -- see quotations
 
 
 TODO:
