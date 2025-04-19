@@ -30,12 +30,7 @@ Strategy:
 
 
 TODO:
+- some bug in selecting best group still
 - scrape puzzles
 - format puzzle database
 
-get sim mat
-compute all group combos
-sort by score
-find best one
-filter groups by constraints
-repeat

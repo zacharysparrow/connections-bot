@@ -18,6 +18,7 @@ from sentence_transformers import SentenceTransformer
 #from freedictionaryapi.clients.sync_client import DictionaryApiClient
 #from sentence_transformers.cross_encoder import CrossEncoder
 #from sklearn.cluster import SpectralClustering
+from scipy.linalg import qr
 
 large_width = 400
 np.set_printoptions(linewidth=large_width)
@@ -47,7 +48,7 @@ def read_csv(file_path):
          return []
     return data_array
 
-puzzle = read_csv("puzzles/test_puzzle_4.txt") #3 is easy, 2 is medium, 1,4 are hard
+puzzle = read_csv("puzzles/test_puzzle_1.txt") #3 is easy, 2 is medium, 1,4 are hard
 puzzle_words = [x.lower().strip() for xs in puzzle for x in xs]
 print(np.reshape(puzzle_words,(4,4)))
 print()
@@ -282,39 +283,90 @@ def make_sim_mat(embeddings, definitions):
     low_idx = 0
     high_idx = 0
     for i,d in enumerate(definitions):
-        new_diag = np.eye(len(d))#2*np.eye(len(d)) - np.ones((len(d),len(d)))
+        new_diag = np.eye(len(d)) - np.ones((len(d),len(d)))
         high_idx += len(d) 
         sim_mat[low_idx:high_idx,low_idx:high_idx] = new_diag
         low_idx = high_idx
     return sim_mat
 
-def find_closest_four(working_words, sim_mat, wrong_groups, close_groups, word_to_working_word, working_word_to_word): #add constraints
-    n_points = len(sim_mat)
-    best_sim = 0
-    best_set = []
-    for i in combinations(range(n_points),4):
-        curr_sim = np.sum(sim_mat[np.ix_(i,i)])
-        if curr_sim > best_sim:
-            best_sim = curr_sim
-            best_set = i
-    return best_set
+#def find_closest_four(working_words, sim_mat, wrong_groups, close_groups, word_to_working_word, working_word_to_word): #add constraints
+#    n_points = len(sim_mat)
+#    best_sim = 0
+#    best_set = []
+#    for i in combinations(range(n_points),4):
+#        curr_sim = np.sum(sim_mat[np.ix_(i,i)])
+#        if curr_sim > best_sim:
+#            best_sim = curr_sim
+#            best_set = i
+#    return best_set
 
-def enumerate_groups(sim_mat): #add constraints
+def is_allowed(i, cluster, wrong_groups, close_groups, ww2w, words):
+    if i in cluster:
+        return False
+    potential_cluster = cluster + [i]
+    for g in wrong_groups:
+        check = sum(words[ww2w[j]] in g for j in potential_cluster)
+        if check > 2: # check wrong groups
+            return False
+    for g in close_groups:
+        check = sum(words[ww2w[j]] in g for j in potential_cluster)
+        if not (check % 2 == 1): # check close groups
+#            if check != 0:
+            return False
+    else:
+        return True
+
+def add_to_cluster(cluster, sim_mat, size, wrong_groups, close_groups, ww2w, words):
+    n_to_add = size - len(cluster)
+    best_sim = [0.0 for i in range(len(sim_mat))]
+    for i,row in enumerate(sim_mat):
+#        if i not in cluster:
+        if is_allowed(i, cluster, wrong_groups, close_groups, ww2w, words):
+            clust_sim = sum(row[cluster])
+            row_copy = row.copy()
+            row_copy[cluster] = -1.0
+            curr_sim = sum(sorted(row_copy)[-n_to_add:])
+            best_sim[i] = curr_sim + clust_sim
+
+    best_addition = np.argmax(best_sim)
+    return best_addition
+
+#            sorted_keys = [k for k in sorted_keys if sum(i in opt_solution for i in k) <= 2] #wrong groups
+#            sorted_keys = [k for k in sorted_keys if sum(i in opt_solution for i in k) % 2 == 1] #close groups
+
+def find_cluster(sim_mat, size, wrong_groups, close_groups, ww2w, words):
+    cluster = []
+    for i in range(size):
+        cluster.append(add_to_cluster(cluster, sim_mat, size, wrong_groups, close_groups, ww2w, words))
+        print(cluster)
+    return cluster
+
+def enumerate_groups(sim_mat):
     n_points = len(sim_mat)
     result = {}
     for i in combinations(range(n_points),4):
         result[i] = np.sum(sim_mat[np.ix_(i,i)])
     return result
 
-def select_clusters(words, model):
+
+
+def select_clusters(words, model, n_defns):
     synsets = [wn.synsets(w) for w in words]
-    definitions = [[w.definition() for w in s] for i,s in enumerate(synsets)]
-    for i,d in enumerate(definitions):
-        d.append(words[i])
-#        print(d)
+    all_definitions = [[w.definition() for w in s] for i,s in enumerate(synsets)]
+    embeddings = []
+    definitions = []
+    for i,d in enumerate(all_definitions):
+        if len(d) < n_defns:
+            d.append(words[i])
+        encodings = model.encode(d)
+        _, _, qr_selection = qr(np.array(encodings).T, pivoting=True)
+        qr_selection = qr_selection[0:n_defns]
+        embeddings.append(encodings[qr_selection])
+        chosen_defns = [d[j] for j in qr_selection]
+        print(chosen_defns)
+        definitions.append(chosen_defns)
 #    n_defn = [len(definitions[i]) for i,w in enumerate(words)]
     working_words = [item for sublist in definitions for item in sublist]
-    print(len(working_words))
     working_word_to_word = [i for i,w in enumerate(words) for j in definitions[i]]
     word_to_working_word = [[] for i in range(len(words))]
     counter = 0
@@ -323,9 +375,8 @@ def select_clusters(words, model):
             word_to_working_word[i].append(counter)
             counter += 1
 #    print(word_to_working_word)
-    embeddings = model.encode(working_words)
+    embeddings = [item for sublist in embeddings for item in sublist] #model.encode(working_words)
     sim_mat = make_sim_mat(embeddings, definitions)
-#    sim_mat = sim_mat - np.eye(len(sim_mat))
 #    for i,row in enumerate(sim_mat):
 #        idx = len(sim_mat) - i
 #        row_max = max(row)
@@ -333,10 +384,10 @@ def select_clusters(words, model):
 #            sim_mat = np.delete(sim_mat, idx, axis=0)
 #            sim_mat = np.delete(sim_mat, idx, axis=1)
 
-    plt.matshow(sim_mat)
-    plt.colorbar()
-    plt.title("All Similarities")
-    plt.show()
+#    plt.matshow(sim_mat)
+#    plt.colorbar()
+#    plt.title("All Similarities")
+#    plt.show()
 #    for row in sim_mat:
 #        print([float(np.mean(row)),float(max(row))])
 #    return "done"
@@ -355,8 +406,13 @@ def select_clusters(words, model):
 #        opt_solution = search_connections(working_words, sim_mat, wrong_groups, close_groups, word_to_working_word, working_word_to_word)
 #        opt_solution, solution_cost = find_closest_four(working_words, sim_mat, wrong_groups, close_groups, word_to_working_word, working_word_to_word)
 #        opt_solution = find_closest_four(working_words, sim_mat, wrong_groups, close_groups, word_to_working_word, working_word_to_word)
+        if sorted_keys == []:
+            raise Exception("I ran out of options!")
         opt_solution = list(sorted_keys[0])
+#        opt_solution = find_cluster(sim_mat, 4, wrong_groups, close_groups, working_word_to_word, words)
+#        print(opt_solution)
         cl1 = [working_word_to_word[i] for i in opt_solution]
+#        print(cl1)
         found_words = [w for i,w in enumerate(words) if i in cl1]
         print(found_words)
         if len(found_words) != 4:
@@ -374,8 +430,6 @@ def select_clusters(words, model):
             defns_to_remove = [item for sublist in defns_to_remove for item in sublist]
             groups.append(found_words)
             sorted_keys = [k for k in sorted_keys if not any(i in defns_to_remove for i in k)]
-            if sorted_keys == []:
-                break
 #            print(len(sorted_keys))
 #            words = [w for i,w in enumerate(words) if i not in cl1]
 #            working_words = [w for i,w in enumerate(working_words) if i not in defns_to_remove]
@@ -391,11 +445,11 @@ def select_clusters(words, model):
 #                    word_to_working_word[i].append(counter)
 #                    counter += 1
 #            sim_mat = np.array([[col for j,col in enumerate(row) if j not in defns_to_remove] for i,row in enumerate(sim_mat) if i not in defns_to_remove])
-##            all_similarities = [[k for i,k in enumerate(s) if i not in cl1] for j,s in enumerate(all_similarities) if j not in cl1]
+#            all_similarities = [[k for i,k in enumerate(s) if i not in cl1] for j,s in enumerate(all_similarities) if j not in cl1]
         elif user_input == 'n':
             lives_left -= 1
             wrong_groups.append(found_words)
-            sorted_keys = [k for k in sorted_keys if sum(i in opt_solution for i in k) <= 2]
+            sorted_keys = [k for k in sorted_keys if sum(words[working_word_to_word[i]] in found_words for i in k) <= 2]
             if lives_left == 0:
                 print("Better luck next time!")
                 quit()
@@ -403,7 +457,7 @@ def select_clusters(words, model):
         elif user_input == '3':
             lives_left -= 1
             close_groups.append(found_words)
-            sorted_keys = [k for k in sorted_keys if sum(i in opt_solution for i in k) % 2 == 1]
+            sorted_keys = [k for k in sorted_keys if (sum(words[working_word_to_word[i]] in found_words for i in k) in set([0,1,3]))]
             if lives_left == 0:
                 print("Better luck next time!")
                 quit()
@@ -420,178 +474,4 @@ def select_clusters(words, model):
 test_words = puzzle_words.copy()
 #test_words = puzzle_words[0:8].copy()
 #test_words.sort()
-best_guess = np.array(select_clusters(test_words, model))
-#all_scores = [[1.0/len(defn) for d in defn] for defn in definitions]
-#for i in range(25):
-#    all_scores = update_scores(definitions, embeddings, all_scores)
-#    best_defns = []
-#    for defn in all_scores:
-#        best_defns.append(defn.index(max(defn)))
-##    print(best_defns)
-#    print(['{0:.2f}'.format(max(a)) for a in all_scores])
-#
-#print()
-#
-#print(best_defns)
-#chosen_defns = [0,1,0,2,2,2,1,4,3,7,5,2,4,2,0,1] # chosen by hand to maximize overlap with group and minimze overlap with other groups
-#print(chosen_defns)
-#chosen_defns = best_defns
-#print(['{0:.2f}'.format(max(a)) for a in all_scores])
-#
-#for a in all_scores:
-#    print(['{0:.2f}'.format(n) for n in a])
-#print()
-#
-#save_pair = [5,6]
-#save_sims = []
-#defns_used = [['x' for j in range(16)] for i in range(16)]
-##defns_used2 = [[0 for j in range(16)] for i in range(16)]
-##chosen_defns = [0,1,0,2,2,2,1,4,3,7,5,2,4,2,0,1] # chosen by hand to maximize overlap with group and minimze overlap with other groups
-#for wi,w in enumerate(embeddings):
-#    for xi,x in enumerate(embeddings):
-#        if xi <= wi:
-#            continue
-#        all_sims = [[0.0 for j in x] for i in w]
-#        for wj,ws in enumerate(w):
-#            for xj,xs in enumerate(x):
-#                all_sims[wj][xj] = np.abs(cosine_similarity([ws],[xs])[0][0])
-##                all_sims.append(cosine_similarity([ws],[xs])[0][0])
-##        dist_mat2[wi][xi] = 1-max(all_sims) #uncomment to make dist matrix
-##        print([wi,xi])
-##        print(all_sims)
-#        if wi == save_pair[0] and xi == save_pair[1]:
-#            save_sims = all_sims
-##        dist_mat2[wi][xi] = max([max(x) for x in all_sims]) #uncomment to make affinity matrix
-#        dist_mat2[wi][xi] = all_sims[chosen_defns[wi]][chosen_defns[xi]] #uncomment to make affinity matrix
-#        defns_used[wi][xi] = find_max_position(all_sims,0) 
-#        defns_used[xi][wi] = find_max_position(all_sims,1)
-##        dist_mat2[wi][xi] = max(all_sims) #uncomment to make affinity matrix
-##        dist_mat2[wi][xi] = np.mean(all_sims) #uncomment to make affinity matrix
-##        dist_mat2[wi][xi] = np.mean([x**2 for x in all_sims]) #uncomment to make affinity matrix
-#        dist_mat2[xi][wi] = dist_mat2[wi][xi]
-#
-#print("looking for consistency in number accross rows within (expected) cluster")
-#print(np.array(defns_used))
-
-#print(save_sims)
-#plt.hist(sum(save_sims,[]))
-#plt.show()
-
-#for wi,w in enumerate(definitions):
-#    for xi,x in enumerate(definitions):
-#        if xi < wi:
-#            continue
-#        all_sims = []
-#        for ws in w:
-#            ranks = model.rank(ws, x)
-#            scores = [rank['score'] for rank in ranks]
-#            all_sims.append(max(scores))
-##        for xs in x:
-##            ranks = model.rank(xs, w)
-##            scores = [rank['score'] for rank in ranks]
-##            all_sims.append(max(scores))
-##        all_sims = max(all_sims)
-#        dist_mat2[wi][xi] = 1-max(all_sims)
-#        dist_mat2[xi][wi] = dist_mat2[wi][xi]
-
-#for i,row in enumerate(dist_mat2):
-#    dist_mat2[i][i] = 1.0
-
-#cl1 = find_closest_four(dist_mat2)
-#print(cl1)
-#new_dist_mat = [[0.0 for i in range(16)] for j in range(16)]
-#for i,r in enumerate(new_dist_mat):
-#    for j,c in enumerate(r):
-#        if i not in cl1 and j not in cl1:
-#            new_dist_mat[i][j] = dist_mat2[i][j]
-#cl2 = find_closest_four(new_dist_mat)
-#print(cl2)
-#new_dist_mat2 = [[0.0 for i in range(16)] for j in range(16)]
-#for i,r in enumerate(new_dist_mat2):
-#    for j,c in enumerate(r):
-#        if i not in cl2 and j not in cl2:
-#            new_dist_mat2[i][j] = new_dist_mat[i][j]
-#cl3 = find_closest_four(new_dist_mat2)
-#print(cl3)
-#new_dist_mat3 = [[0.0 for i in range(16)] for j in range(16)]
-#for i,r in enumerate(new_dist_mat3):
-#    for j,c in enumerate(r):
-#        if i not in cl3 and j not in cl3:
-#            new_dist_mat3[i][j] = new_dist_mat2[i][j]
-#cl4 = find_closest_four(new_dist_mat3)
-#print(cl4)
-
-#cluster_size = 4
-#n_clusters = 4
-#unassigned = range(cluster_size*n_clusters)
-#clusters = [[] for n in n_clusters]
-#for 
-
-#mds = MDS(n_components=100, dissimilarity='precomputed', random_state=0)
-# Get the embeddings
-#X_transform = mds.fit_transform(dist_mat2)
-
-#eigenvecs = spectral_embedding(np.array(dist_mat2), n_components=4, random_state=0)
-#print(eigenvecs)
-
-#clustering = SpectralClustering(n_clusters=4,
-#        assign_labels='discretize',
-#        affinity='precomputed',
-#        random_state=0).fit(dist_mat2)
-#predicted_groups = clustering.labels_
-
-#clustering = SpectralClustering(n_clusters=3,
-#        assign_labels='discretize',
-#        affinity='precomputed',
-#        random_state=0).fit([x[0:12] for x in dist_mat2[0:12]])
-#predicted_groups = clustering.labels_
-#predicted_groups = cluster_equal_size_mincostmaxflow(X_transform, 4, show_plt=False)[0]#[0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3]
-#predicted_groups = cluster_equal_size_mincostmaxflow(eigenvecs, 4, show_plt=False)[0]#[0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3]
-#print(predicted_groups)
-#
-#def group_by_cluster(points, labels):
-#    grouped_points = defaultdict(list)
-#    for i, label in enumerate(labels):
-#        grouped_points[label].append(points[i])
-#    return dict(grouped_points)
-#
-#def average_distance_in_group(group):
-#    if len(group) < 2:
-#        return 0
-#    distances = [np.sqrt(sum([(p1[i] - p2[i])**2 for i in range(len(p1))]))
-#                 for p1, p2 in combinations(group, 2)]
-#    return float(np.mean(distances))
-#
-#grouped_data = group_by_cluster(eigenvecs, predicted_groups)
-#grouped_words = group_by_cluster(puzzle_words, predicted_groups)
-#print(grouped_words)
-#spreads = []
-#for g in list(grouped_data.values()):
-#    spreads.append(average_distance_in_group(g))
-#print(spreads)
-
-#smallest_cluster = spreads.index(min(spreads))
-
-##plt.matshow(sim_mat)
-##plt.colorbar()
-##plt.title("Word Similarities synsets")
-##plt.show()
-#sizes = [64 for i in range(16)]
-#colors = ['y','y','y','y','g','g','g','g','b','b','b','b','m','m','m','m']
-#group_colors = [['y','g','b','m'][i] for i in predicted_groups]
-#fig = plt.figure()
-##ax = fig.add_subplot(projection='3d')
-#ax = fig.add_subplot()
-##ax.scatter(X_transform[:,0], X_transform[:,1], X_transform[:,2], s=sizes, c=colors)
-#ax.scatter(X_transform[:,0], X_transform[:,1], s=[4*x for x in sizes], c=group_colors)
-#ax.scatter(X_transform[:,0], X_transform[:,1], s=[2*x for x in sizes], c=['k','k','k','k','k','k','k','k','k','k','k','k','k','k','k','k'])
-#ax.scatter(X_transform[:,0], X_transform[:,1], s=sizes, c=colors)
-#plt.title('Embedding')
-#plt.show()
-
-#plt.matshow(dist_mat2)
-#plt.colorbar()
-#plt.title("Word Similarities defn Transformer")
-#plt.show()
-
-
+best_guess = np.array(select_clusters(test_words, model, 3))
