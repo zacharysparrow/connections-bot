@@ -1,0 +1,44 @@
+import requests
+import csv
+from bs4 import BeautifulSoup as bs
+
+#url = "https://en.wiktionary.org/api/rest_v1/page/definition/ghost"
+#response = requests.get(url)
+#
+#print(response.status_code)
+#
+#word_data = response.json()
+#
+#for i in word_data['en']:
+#    for j in i['definitions']:
+#        print(j.keys())
+
+def get_quotes(word):
+    url = "https://en.wiktionary.org/wiki/"+word
+    response = requests.get(url)
+    soup = bs(response.content, 'html.parser')
+    quotes = soup.find_all('span', {'class':'Latn e-quotation cited-passage'})
+
+    quote_text = [word]
+    word_pos = [0]
+    for i in quotes:
+        quote_text.append(i.get_text())
+    for q in quote_text:
+        word_pos.append(q.find(word))
+
+    return [word_pos, quote_text]
+
+def read_csv(file_path):
+    data_array = []
+    try:
+        with open(file_path, 'r') as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                data_array.append(row)
+    except FileNotFoundError:
+        print(f"Error: File not found at '{file_path}'")
+        return []
+    except Exception as e:
+         print(f"An error occurred: {e}")
+         return []
+    return data_array
