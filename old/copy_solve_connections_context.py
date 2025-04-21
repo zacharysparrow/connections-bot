@@ -5,8 +5,9 @@ from itertools import combinations
 
 import matplotlib.pyplot as plt
 
-from nltk.corpus import wordnet as wn
-from sentence_transformers import SentenceTransformer
+#from nltk.corpus import wordnet as wn
+#from sentence_transformers import SentenceTransformer
+from transformers import AutoTokenizer, AutoModel
 from sklearn.metrics.pairwise import cosine_similarity
 from scipy.linalg import qr
 
@@ -21,6 +22,10 @@ puzzle_words = [x.lower().strip() for xs in puzzle for x in xs]
 print(np.reshape(puzzle_words,(4,4)))
 print()
 
+#model = SentenceTransformer("all-MiniLM-L6-v2")
+model_id = "answerdotai/ModernBERT-base"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModel.from_pretrained(model_id)
 n_embeddings_per_word = 3
 
 
@@ -85,20 +90,50 @@ def enumerate_groups(sim_mat):
         result[i] = np.sum(sim_mat[np.ix_(i,i)])
     return result
 
-    for i,d in enumerate(all_definitions):
-        if len(d) < n_defns:
-            d.append(words[i])
-        encodings = model.encode(d)
-        _, _, qr_selection = qr(np.array(encodings).T, pivoting=True)
-        qr_selection = qr_selection[0:n_defns]
-        embeddings.append(encodings[qr_selection])
-        chosen_defns = [d[j] for j in qr_selection]
-        print(chosen_defns)
-        definitions.append(chosen_defns)
+
+def index_of_substring(tokens, substring, word_ids):
+    #use word_ids to group tokens appropriately
+    the_list = []
+    stripped_tokens = [x.replace('Ġ','') for x in tokens if x not in ['[CLS]','[SEP]']]
+    for i,w in enumerate(word_ids):
+        if i < len(word_ids)-1:
+            if w == word_ids[i+1]:
+                tokens[i] = tokens[i]+ tokens[i+1]
+                tokens.pop(i+1)
+                word_ids.pop(i+1)
+    substring_pos = []
+    for i, s in enumerate(tokens):
+        if substring in s:
+              substring_pos.append(i)
+    return substring_pos
 
 
-def get_embeddings(defn, n_defns, model):
-    embeddings = model.encode(defn)
+def get_embeddings(word, n_defns, model, tokenizer):
+    print(word)
+    quotes = get_quotes(word) #need to lemmatize in here 
+
+    inputs = []
+    for i,q in enumerate(quotes):
+        quotes[i] = q.replace('”', '').replace('“','').replace('"','')
+        quote_input = tokenizer(quotes[i], return_tensors="pt", padding=True, truncation=True)#, is_split_into_words=True)
+        inputs.append(quote_input)
+
+    word_pos = []
+    for i in inputs:
+        curr_pos = index_of_substring(tokenizer.convert_ids_to_tokens(i['input_ids'][0]), word, i.word_ids())
+        word_pos.append(curr_pos)
+    
+    all_embeddings = []
+    for i in inputs:
+        all_embeddings.append(model(**i)['last_hidden_state'].detach().numpy())
+
+    embeddings = []
+    for i,e in enumerate(all_embeddings):
+        embeddings.append(e[0][word_pos[i]])
+
+    embeddings = [item for sublist in embeddings for item in sublist]
+    print(len(embeddings))
+
     _, _, qr_selection = qr(np.array(embeddings).T, pivoting=True)
     qr_selection = qr_selection[0:n_defns]
     embeddings = [embeddings[i] for i in qr_selection]
@@ -106,12 +141,12 @@ def get_embeddings(defn, n_defns, model):
 
 
 def select_clusters(words, n_defns):
-    model = SentenceTransformer("all-MiniLM-L6-v2")
-    synsets = [wn.synsets(w) for w in words]
-    all_definitions = [[w.definition() for w in s] for i,s in enumerate(synsets)]
+    model_id = "answerdotai/ModernBERT-base"
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    model = AutoModel.from_pretrained(model_id)
     embeddings = []
-    for d in all_definitions:
-        word_embedding = get_embeddings(d, n_defns, model)
+    for w in words:
+        word_embedding = get_embeddings(w, n_defns, model, tokenizer)
         embeddings.append(word_embedding)
     embeddings_to_words = [i for i,w in enumerate(words) for j in embeddings[i]]
     words_to_embeddings = [[] for i in range(len(words))]

@@ -19,14 +19,14 @@ def get_quotes(word):
     soup = bs(response.content, 'html.parser')
     quotes = soup.find_all('span', {'class':'Latn e-quotation cited-passage'})
 
-    quote_text = [word]
-    word_pos = [0]
+    quote_text = ["Word: "+word]
+#    word_pos = []
     for i in quotes:
-        quote_text.append(i.get_text())
-    for q in quote_text:
-        word_pos.append(q.find(word))
+        quote_text.append(i.get_text().lower())
+#    for q in quote_text:
+#        word_pos.append(q.find(word))
 
-    return [word_pos, quote_text]
+    return quote_text
 
 def read_csv(file_path):
     data_array = []
