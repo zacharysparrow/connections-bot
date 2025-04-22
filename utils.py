@@ -13,20 +13,33 @@ from bs4 import BeautifulSoup as bs
 #    for j in i['definitions']:
 #        print(j.keys())
 
-def get_quotes(word):
-    url = "https://en.wiktionary.org/wiki/"+word
+def get_defns(word):
+    url = "https://en.wiktionary.org/api/rest_v1/page/definition/"+word
     response = requests.get(url)
-    soup = bs(response.content, 'html.parser')
-    quotes = soup.find_all('span', {'class':'Latn e-quotation cited-passage'})
+    if response.status_code != 200:
+       raise Exception("Wiki not found! "+word) 
+    word_data = response.json()
+    defn_text = []
+    for i in word_data['en']:
+        for j in i['definitions']:
+            soup = bs(j['definition'], 'html.parser')
+            defn_text.append(soup.get_text().lower())
+    return defn_text
 
-    quote_text = ["Word: "+word]
-#    word_pos = []
-    for i in quotes:
-        quote_text.append(i.get_text().lower())
-#    for q in quote_text:
-#        word_pos.append(q.find(word))
-
-    return quote_text
+#def get_quotes(word):
+#    url = "https://en.wiktionary.org/wiki/"+word
+#    response = requests.get(url)
+#    soup = bs(response.content, 'html.parser')
+#    quotes = soup.find_all('span', {'class':'Latn e-quotation cited-passage'})
+#
+#    quote_text = ["Word: "+word]
+##    word_pos = []
+#    for i in quotes:
+#        quote_text.append(i.get_text().lower())
+##    for q in quote_text:
+##        word_pos.append(q.find(word))
+#
+#    return quote_text
 
 def read_csv(file_path):
     data_array = []

@@ -1,0 +1,672 @@
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 0, 4]","[0, 1, 0, 0]","[['city', 'land', 'town', 'world']]"
+"[1, 2, 2]","[0, 0, 0, 1]","[['ella', 'gusto', 'mayo', 'soy']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[2, 3, 1]","[1, 0, 1, 0]","[['daniel', 'job', 'judges', 'numbers'], ['jab', 'pierce', 'poke', 'stick']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['cape', 'crater', 'gorge', 'ridge'], ['beat', 'pound', 'pulse', 'thump']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[4, 0, 1]","[1, 1, 1, 1]","[['diamond', 'field', 'park', 'stadium'], ['balance', 'difference', 'remainder', 'rest'], ['cruise', 'drive', 'ride', 'spin'], ['bay', 'harmony', 'ink', 'trade']]"
+"[1, 4, 0]","[1, 0, 0, 0]","[['announcement', 'bulletin', 'notice', 'poster']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['kind', 'like', 'sort', 'type']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['as well', 'besides', 'to boot', 'too']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 1, 0, 0]","[['bookend', 'bracket', 'flank', 'surround']]"
+"[1, 1, 3]","[0, 1, 0, 0]","[['bingo', 'correct', 'ding', 'right']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 0, 1, 0]","[['adults only', 'everyone', 'teen', 'mature']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['absorb', 'entrance', 'grab', 'rivet']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 0, 1, 0]","[['compass', 'ruler', 'stencil', 't-square']]"
+"[1, 1, 3]","[0, 1, 0, 0]","[['bay', 'channel', 'sound', 'strait']]"
+"[1, 2, 2]","[0, 0, 1, 0]","[['divider', 'lane', 'median', 'shoulder']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[4, 1, 1]","[1, 1, 1, 1]","[['abandon', 'freedom', 'spontaneity', 'unrestraint'], ['fiber', 'strand', 'string', 'thread'], ['dump', 'garbage', 'monster', 'pickup'], ['ben folds', 'jackson', 'maroon', 'mc']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['cluster', 'collection', 'constellation', 'group']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[1, 0, 0, 0]","[['assess', 'charge', 'fine', 'levy']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['angle', 'bias', 'slant', 'spin']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 0, 1, 0]","[['liberty bell', 'venus de milo', 'statue of liberty', 'tower of pisa']]"
+"[4, 2, 0]","[1, 1, 1, 1]","[['brick', 'concrete', 'metal', 'stone'], ['microphone', 'mouse', 'scanner', 'tablet'], ['favor', 'kindness', 'service', 'solid'], ['abracadabra', 'centerfold', 'mickey', 'physical']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[4, 3, 0]","[1, 1, 1, 1]","[['marbles', 'mind', 'sense', 'wits'], ['hesitate', 'waffle', 'waver', 'yo-yo'], ['angel', 'dear', 'doll', 'peach'], ['bell', 'egg', 'genie', 'toothpaste']]"
+"[1, 1, 3]","[0, 0, 1, 0]","[['atom', 'cell', 'organ', 'tissue']]"
+"[4, 1, 0]","[1, 1, 1, 1]","[['former', 'late', 'past', 'prior'], ['charge', 'cost', 'price', 'rate'], ['dash', 'hyphen', 'minus', 'underscore'], ['baggie', 'barge', 'comer', 'pisa']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['gusto', 'passion', 'relish', 'zest'], ['beaucoup', 'molto', 'mucho', 'multi']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[1, 0, 0, 0]","[['gnash', 'grate', 'grind', 'scrape']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[4, 1, 1]","[1, 1, 1, 1]","[['gather', 'harvest', 'pick', 'reap'], ['answer', 'fix', 'remedy', 'solution'], ['baseball glove', 'can opener', 'golf club', 'guitar'], ['eraser', 'eyedropper', 'lasso', 'magic wand']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[4, 2, 0]","[1, 1, 1, 1]","[['butty', 'chippy', 'footy', 'telly'], ['cavity', 'hole', 'hollow', 'pit'], ['available', 'handy', 'nearby', 'ready'], ['filling', 'hearty', 'solid', 'square']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['curve', 'snake', 'weave', 'wind']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['baby', 'humor', 'indulge', 'pamper']]"
+"[1, 1, 3]","[0, 1, 0, 0]","[['expression', 'gesture', 'symbol', 'token']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['certificate', 'deed', 'receipt', 'title'], ['dance', 'monologue', 'sketch', 'song']]"
+"[2, 3, 1]","[1, 0, 1, 0]","[['jerk', 'tug', 'wrench', 'yank'], ['block', 'bolster', 'mat', 'strap']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[2, 3, 1]","[1, 0, 1, 0]","[['later', 'now', 'soon', 'then'], ['bio', 'player', 'stat', 'team']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['grand', 'great', 'lofty', 'noble']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 1, 0, 0]","[['bit', 'little', 'mite', 'tad']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[4, 0, 0]","[1, 1, 1, 1]","[['beak', 'honker', 'snoot', 'snout'], ['connoisseur', 'critic', 'expert', 'snob'], ['case', 'chest', 'crate', 'trunk'], ['back', 'breast', 'butter', 'free']]"
+"[4, 0, 3]","[1, 1, 1, 1]","[['air', 'aura', 'halo', 'vibe'], ['dwell', 'harp', 'insist', 'linger'], ['bernie', 'parish', 'rigatoni', 'romeo'], ['beer', 'dip', 'pizza', 'wings']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[1, 0, 0, 0]","[['bite', 'mouthful', 'sample', 'taste']]"
+"[2, 2, 2]","[1, 0, 1, 0]","[['axles', 'hitch', 'tractor', 'trailer'], ['farm', 'fish', 'gather', 'hunt']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 0, 4]","[1, 0, 0, 0]","[['better', 'eclipse', 'surpass', 'top']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 1, 0, 0]","[['angle', 'bend', 'crook', 'elbow']]"
+"[1, 3, 1]","[0, 0, 1, 0]","[['basin', 'bluff', 'cape', 'plain']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['drive', 'impulse', 'itch', 'urge']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[1, 0, 0, 0]","[['coach', 'guide', 'school', 'train']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['fairy tale', 'fantasy', 'fiction', 'invention']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 0, 0, 1]","[['from', 'sea', 'shining', 'to']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[4, 0, 3]","[1, 1, 1, 1]","[['a life', 'a novel', 'essays', 'part one'], ['a few', 'certain', 'some', 'various'], ['a cappella', 'barbershop', 'doo-wop', 'madrigal'], ['a deal', 'a rose', 'enough', 'love']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['gasp', 'heave', 'pant', 'puff']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[2, 3, 1]","[1, 0, 0, 1]","[['earthworm', 'eel', 'salamander', 'slug'], ['gatecrash', 'raindrop', 'skydive', 'waterfall']]"
+"[2, 3, 1]","[1, 0, 1, 0]","[['bolt', 'dart', 'dash', 'fly'], ['attention', 'dear', 'for', 'to']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[1, 0, 0, 0]","[['brick', 'cherry', 'maroon', 'ruby']]"
+"[1, 1, 3]","[0, 0, 0, 1]","[['hershey', 'histamine', 'itsy', 'minefield']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['clicks', 'hits', 'presses', 'taps'], ['bacon', 'grits', 'hash', 'toast']]"
+"[4, 1, 0]","[1, 1, 1, 1]","[['about', 'around', 'like', 'roughly'], ['handsome', 'healthy', 'respectable', 'tidy'], ['elder', 'palm', 'pine', 'spruce'], ['ala', 'ark', 'miss', 'ore']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[2, 1, 3]","[1, 0, 1, 0]","[['delay', 'postpone', 'shelve', 'table'], ['barge', 'junk', 'sub', 'tug']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[2, 1, 3]","[1, 0, 1, 0]","[['flip', 'leaf', 'riffle', 'thumb'], ['clove', 'mace', 'nutmeg', 'pepper']]"
+"[1, 1, 3]","[0, 1, 0, 0]","[['going', 'once', 'sold', 'twice']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[0, 1, 0, 0]","[['comb', 'gear', 'saw', 'zipper']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['paradise', 'seventh heaven', 'shangri-la', 'xanadu']]"
+"[1, 1, 3]","[0, 1, 0, 0]","[['cruise', 'takeoff', 'taxi', 'touchdown']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 1, 0, 0]","[['sandwich', 'shoehorn', 'squeeze', 'wedge']]"
+"[4, 0, 1]","[1, 1, 1, 1]","[['bait', 'chum', 'fly', 'lure'], ['affiliate', 'associate', 'equate', 'relate'], ['bow', 'fellow', 'horn', 'legs'], ['liberty', 'storm', 'sun', 'wings']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['hex', 'jinx', 'pox', 'spell']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[1, 0, 0, 0]","[['credit', 'praise', 'recognition', 'thanks']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 0, 4]","[0, 1, 0, 0]","[['discount', 'forget', 'ignore', 'overlook']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['crowd', 'flock', 'host', 'sea']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[2, 3, 1]","[1, 1, 0, 0]","[['gum', 'latex', 'resin', 'sap'], ['account', 'chronicle', 'description', 'story']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['bark', 'bay', 'howl', 'snarl']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 0, 4]","[0, 1, 0, 0]","[['gas', 'internet', 'phone', 'rent']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['clingy', 'sleek', 'slinky', 'snug']]"
+"[1, 4, 0]","[0, 0, 1, 0]","[['gator', 'sooner', 'volunteer', 'wolverine']]"
+"[2, 2, 2]","[0, 1, 1, 0]","[['jug', 'pipe', 'recorder', 'whistle'], ['letter', 'phrase', 'sentence', 'word']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[0, 1, 1, 0]","[['addition', 'annex', 'extension', 'wing'], ['calculus', 'cavity', 'plaque', 'tartar']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['bellyache', 'carp', 'crab', 'grumble']]"
+"[1, 1, 3]","[0, 1, 0, 0]","[['core', 'meat', 'substance', 'thrust']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['cask', 'cylinder', 'drum', 'tank']]"
+"[2, 3, 1]","[1, 0, 1, 0]","[['exponent', 'power', 'radical', 'root'], ['bent', 'gnarly', 'twisted', 'warped']]"
+"[2, 1, 3]","[1, 0, 1, 0]","[['adult', 'blue', 'spicy', 'suggestive'], ['antic', 'caper', 'exploit', 'stunt']]"
+"[2, 3, 1]","[1, 1, 0, 0]","[['character', 'image', 'name', 'reputation'], ['hash', 'salad', 'scramble', 'stew']]"
+"[4, 0, 1]","[1, 1, 1, 1]","[['correspond', 'message', 'text', 'write'], ['different', 'new', 'novel', 'original'], ['biped', 'furniture', 'poem', 'yardstick'], ['pause', 'play', 'record', 'stop']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[2, 1, 3]","[0, 1, 1, 0]","[['hearing', 'inquiry', 'proceeding', 'trial'], ['feeling', 'hunch', 'impression', 'sense']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['crawl', 'creep', 'drag', 'inch']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['bat', 'blink', 'flutter', 'wink']]"
+"[1, 1, 3]","[0, 1, 0, 0]","[['dolly', 'rollerblade', 'skateboard', 'wagon']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['attending', 'fellow', 'intern', 'resident']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['audible', 'pandora', 'shazam', 'tidal']]"
+"[2, 1, 3]","[1, 1, 0, 0]","[['air', 'mood', 'feeling', 'quality'], ['cute', 'fresh', 'smart', 'wise']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[4, 2, 1]","[1, 1, 1, 1]","[['concoct', 'engineer', 'hatch', 'mastermind'], ['designer', 'haute', 'high-end', 'luxury'], ['bingo', 'marco polo', 'tag', 'uno'], ['galileo', 'pioneer', 'viking', 'voyager']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[1, 0, 0, 0]","[['article', 'column', 'feature', 'story']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['generate', 'inspire', 'prompt', 'provoke'], ['candle', 'incense', 'lotion', 'soap']]"
+"[2, 3, 1]","[1, 0, 1, 0]","[['bust', 'dud', 'flop', 'miss'], ['card', 'charge', 'credit', 'plastic']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['green', 'lawn', 'park', 'yard']]"
+"[2, 2, 2]","[1, 0, 0, 1]","[['eventually', 'later', 'next', 'soon'], ['peace', 'scissors', 'two', 'victory']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['center', 'guard', 'quarterback', 'safety']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[2, 4, 0]","[1, 0, 1, 0]","[['scarf', 'shawl', 'stole', 'wrap'], ['coo', 'gobble', 'honk', 'hoot']]"
+"[2, 3, 1]","[1, 0, 0, 1]","[['brass', 'cheek', 'nerve', 'sauce'], ['relish', 'savor', 'treasure', 'value']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[2, 4, 0]","[1, 1, 0, 0]","[['bubbles', 'fizz', 'foam', 'froth'], ['blossom', 'develop', 'mature', 'progress']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['bikini', 'g-string', 'hipster', 'thong']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['dent', 'dimple', 'ding', 'divot']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[4, 1, 1]","[1, 1, 1, 1]","[['bet', 'chance', 'gamble', 'risk'], ['cube', 'dice', 'julienne', 'slice'], ['octopus', 'shiva', 'slot machine', 'venus de milo'], ['casino', 'heat', 'joker', 'taxi driver']]"
+"[1, 4, 0]","[1, 0, 0, 0]","[['lather', 'stew', 'sweat', 'tizzy']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['blanch', 'boil', 'poach', 'steam']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[1, 0, 0, 0]","[['hat trick', 'threepeat', 'trifecta', 'triple crown']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 0, 1, 0]","[['drawing', 'lottery', 'pool', 'raffle']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[0, 1, 1, 0]","[['chair', 'leader', 'speaker', 'whip'], ['flat', 'mule', 'pump', 'slide']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['chief', 'premier', 'principal', 'supreme']]"
+"[4, 0, 0]","[1, 1, 1, 1]","[['clown', 'dweeb', 'sap', 'turkey'], ['decline', 'drop', 'dwindle', 'ebb'], ['dwell', 'inhabit', 'live', 'stay'], ['dwarf', 'sea', 'sin', 'wonder']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['energy', 'juice', 'life', 'zip']]"
+"[2, 0, 4]","[0, 1, 0, 1]","[['advantage', 'benefit', 'interest', 'sake'], ['biota', 'feta', 'mochi', 'pepsi']]"
+"[1, 3, 1]","[0, 0, 0, 1]","[['amethyst', 'eggplant', 'grimace', 'lavender']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['kinds', 'sorts', 'stripes', 'types']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 0, 1, 0]","[['bishop', 'pastor', 'prior', 'pope']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['ball', 'driver', 'glove', 'tee']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 1, 0, 0]","[['anvil', 'canal', 'drum', 'hammer']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 0, 1, 0]","[['brown', 'duke', 'howard', 'smith']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['boom', 'crash', 'roar', 'thunder']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['approval', 'blessing', 'consent', 'support']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['boiling', 'fuming', 'livid', 'steaming'], ['position', 'ranking', 'standing', 'station']]"
+"[2, 2, 2]","[0, 1, 1, 0]","[['creep', 'slip', 'steal', 'tiptoe'], ['budget', 'enterprise', 'national', 'thrifty']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[2, 3, 1]","[1, 0, 1, 0]","[['bull', 'crab', 'lion', 'ram'], ['blow', 'draft', 'gust', 'puff']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['alarm', 'hour', 'snooze', 'time set']]"
+"[2, 1, 3]","[1, 0, 0, 1]","[['dialect', 'language', 'speech', 'tongue'], ['cottage', 'craftsman', 'prairie', 'ranch']]"
+"[2, 4, 0]","[1, 1, 0, 0]","[['hi', 'ma', 'or', 'pa'], ['average', 'fair', 'ok', 'so-so']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['extent', 'range', 'reach', 'scope']]"
+"[4, 0, 0]","[1, 1, 1, 1]","[['boo-boo', 'flub', 'gaffe', 'goof'], ['daisy', 'jasmine', 'petunia', 'poppy'], ['babe', 'lou', 'mickey', 'yogi'], ['buzz', 'dance', 'pollinate', 'sting']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['gold', 'lead', 'mercury', 'tin']]"
+"[2, 3, 1]","[1, 0, 1, 0]","[['about', 'concerning', 'on', 'toward'], ['barge', 'craft', 'ship', 'vessel']]"
+"[1, 4, 0]","[0, 1, 0, 0]","[['function', 'operate', 'run', 'work']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['advocate', 'champion', 'cheerleader', 'exponent']]"
+"[4, 1, 1]","[1, 1, 1, 1]","[['echo', 'parrot', 'repeat', 'quote'], ['anchor', 'backbone', 'cornerstone', 'pillar'], ['backflip', 'bellyflop', 'cannonball', 'jackknife'], ['ham', 'pirate', 'satellite', 'talk']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 0, 1, 0]","[['disapprove', 'mind', 'object', 'protest']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[0, 1, 0, 0]","[['cast', 'chuck', 'fling', 'hurl']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 1, 0, 0]","[['elaborate', 'expand', 'explain', 'specify']]"
+"[2, 0, 4]","[1, 1, 0, 0]","[['arena', 'bowl', 'coliseum', 'dome'], ['alley', 'court', 'drive', 'lane']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 0, 0, 1]","[['barge', 'jostle', 'muscle', 'shoulder']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 1, 0, 0]","[['fiddle', 'horn', 'recorder', 'triangle']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['composition', 'fabric', 'makeup', 'structure']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 0, 1, 0]","[['appear', 'look', 'seem', 'sound']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['auditorium', 'gym', 'lab', 'library']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 1, 0, 0]","[['attitude', 'cheek', 'lip', 'sass']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['journal', 'log', 'record', 'register']]"
+"[1, 1, 3]","[0, 1, 0, 0]","[['grit', 'resolve', 'spirit', 'will']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[0, 1, 0, 0]","[['con', 'hustle', 'racket', 'sting']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[1, 0, 0, 0]","[['chase', 'hunt', 'quest', 'search']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 1, 0, 0]","[['bug', 'chill', 'cold', 'cough']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[1, 1, 0, 0]","[['ferris wheel', 'merry-go-round', 'roller coaster', 'tilt-a-whirl'], ['clearance', 'go-ahead', 'green light', 'thumbs-up']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[1, 0, 0, 0]","[['condition', 'form', 'shape', 'state']]"
+"[2, 1, 3]","[1, 1, 0, 0]","[['perch', 'pike', 'skate', 'sole'], ['dunk', 'floater', 'layup', 'three']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['article', 'essay', 'paper', 'report']]"
+"[2, 3, 1]","[0, 1, 1, 0]","[['hit', 'sensation', 'smash', 'success'], ['button', 'hat', 'shirt', 'sticker']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[1, 0, 0, 0]","[['bitter', 'salty', 'sore', 'upset']]"
+"[4, 1, 1]","[1, 1, 1, 1]","[['absorb', 'engross', 'hold', 'rivet'], ['film', 'record', 'shoot', 'tape'], ['pastel', 'petals', 'pleats', 'staple'], ['good', 'penny', 'please', 'woman']]"
+"[4, 0, 0]","[1, 1, 1, 1]","[['conceive', 'envision', 'imagine', 'picture'], ['brush', 'flick', 'sweep', 'wipe'], ['coat', 'film', 'layer', 'skin'], ['code', 'develop', 'hack', 'program']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[1, 0, 0, 0]","[['chow', 'eats', 'fare', 'grub']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[1, 0, 0, 0]","[['choice', 'say', 'voice', 'vote']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[4, 1, 2]","[1, 1, 1, 1]","[['banner', 'billboard', 'poster', 'sign'], ['first', 'initial', 'maiden', 'premier'], ['back', 'champion', 'endorse', 'support'], ['here', 'theme', 'use', 'wee']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['drain', 'duct', 'pipe', 'sewer']]"
+"[4, 1, 0]","[1, 1, 1, 1]","[['exploit', 'leverage', 'milk', 'use'], ['done', 'over', 'through', 'up'], ['heyday', 'hijinks', 'supper', 'yogurt'], ['city', 'copy', 'culture', 'sports']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[1, 0, 0, 0]","[['charm', 'hex', 'magic', 'spell']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['chop', 'cube', 'dice', 'mince']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['bulldog', 'catfish', 'horsefly', 'turtledove']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[0, 0, 1, 0]","[['breeze', 'coast', 'glide', 'sail']]"
+"[1, 2, 2]","[0, 1, 0, 0]","[['meadow', 'plain', 'prairie', 'savanna']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[1, 1, 0, 0]","[['chuck', 'flank', 'loin', 'round'], ['kid', 'needle', 'rib', 'tease']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[1, 0, 0, 0]","[['brass', 'cheek', 'gall', 'nerve']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['cap', 'cork', 'lid', 'tab']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['brick', 'cherry', 'rose', 'ruby']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 0, 1, 0]","[['few', 'many', 'several', 'some']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['bar', 'club', 'disco', 'lounge']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 1, 0, 0]","[['examine', 'grill', 'probe', 'question']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[1, 0, 0, 0]","[['deep', 'extreme', 'fierce', 'intense']]"
+"[4, 2, 0]","[1, 1, 1, 1]","[['abstract', 'brief', 'digest', 'outline'], ['curt', 'hairy', 'kneel', 'wane'], ['accept', 'believe', 'buy', 'swallow'], ['outage', 'short', 'spike', 'surge']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[1, 0, 0, 0]","[['boot', 'bounce', 'eject', 'toss']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 1, 0, 0]","[['car', 'conductor', 'station', 'track']]"
+"[1, 4, 0]","[0, 0, 0, 1]","[['bend', 'bowline', 'hitch', 'sheepshank']]"
+"[2, 3, 1]","[1, 1, 0, 0]","[['copy', 'text', 'words', 'writing'], ['adhere', 'glue', 'paste', 'stick']]"
+"[4, 1, 2]","[1, 1, 1, 1]","[['aim', 'intend', 'mean', 'plan'], ['curb', 'grate', 'gutter', 'manhole'], ['cal', 'gal', 'in', 'oz'], ['fleece', 'girls', 'parachute', 'rule']]"
+"[1, 3, 1]","[0, 0, 1, 0]","[['interest', 'percentage', 'share', 'stake']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 1, 0, 0]","[['drill', 'exercise', 'practice', 'routine']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 1, 0, 0]","[['hyper', 'super', 'uber', 'ultra']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[1, 0, 1, 0]","[['extent', 'range', 'reach', 'scope'], ['arms', 'coat', 'crest', 'shield']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['desire', 'drive', 'resolve', 'will']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['bed', 'chair', 'couch', 'table'], ['bear', 'harbor', 'hold', 'maintain']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 0, 4]","[1, 0, 0, 0]","[['benchmark', 'gauge', 'standard', 'yardstick']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[4, 0, 0]","[1, 1, 1, 1]","[['🥓', '🍞', '🥬', '🧀'], ['🧠', '✈️', '🌧️', '🚂'], ['👽', '🧛', '🪚', '😱'], ['🐝', '🐑', '👁️', '🫖']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['fall', 'slip', 'spill', 'trip']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['fall', 'slip', 'spill', 'trip']]"
+"[2, 3, 1]","[1, 0, 1, 0]","[['gasps', 'huffs', 'pants', 'puffs'], ['binds', 'jams', 'pickles', 'spots']]"
+"[4, 1, 2]","[1, 1, 1, 1]","[['mighty', 'pretty', 'really', 'very'], ['daisy', 'goofy', 'happy', 'lady'], ['baby', 'navy', 'sky', 'tiffany'], ['army', 'colony', 'livery', 'shiny']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['departed', 'left', 'split', 'went']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[1, 1, 0, 0]","[['bass', 'bassoon', 'harp', 'recorder'], ['bloom', 'bud', 'shoot', 'sprout']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[4, 2, 1]","[1, 1, 1, 1]","[['gab', 'jaw', 'yak', 'yap'], ['cow', 'doe', 'ewe', 'hen'], ['bib', 'eye', 'gag', 'pop'], ['ear', 'mar', 'mer', 'sat']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 0, 4]","[0, 0, 1, 0]","[['berry', 'king', 'page', 'waters']]"
+"[1, 4, 0]","[0, 1, 0, 0]","[['cygnus', 'gemini', 'orion', 'pegasus']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['advance', 'march', 'progress', 'push'], ['absurdity', 'folly', 'madness', 'nonsense']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 0, 4]","[1, 0, 0, 0]","[['hit', 'smash', 'success', 'winner']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[4, 1, 2]","[1, 1, 1, 1]","[['and', 'also', 'plus', 'with'], ['class', 'division', 'rank', 'tier'], ['daddy', 'harlem', 'howl', 'if'], ['boston', 'golden', 'lab', 'pit']]"
+"[2, 1, 3]","[1, 0, 1, 0]","[['baby', 'mother', 'pamper', 'spoil'], ['robe', 'slippers', 'towel', 'washcloth']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[1, 0, 0, 0]","[['dart', 'hem', 'pleat', 'seam']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['collective', 'common', 'joint', 'mutual']]"
+"[4, 3, 0]","[1, 1, 1, 1]","[['action', 'claim', 'complaint', 'lawsuit'], ['hangar', 'runway', 'tarmac', 'terminal'], ['foxglove', 'gumshoe', 'turncoat', 'windsock'], ['beanbag', 'club', 'ring', 'torch']]"
+"[1, 0, 4]","[0, 0, 1, 0]","[['outside', 'remote', 'slim', 'small']]"
+"[1, 2, 2]","[0, 1, 0, 0]","[['associate', 'fellow', 'partner', 'peer']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 1, 0, 0]","[['bet', 'gamble', 'risk', 'stake']]"
+"[4, 2, 1]","[1, 1, 1, 1]","[['chest', 'coffer', 'safe', 'vault'], ['hop', 'jump', 'leap', 'spring'], ['age', 'day', 'era', 'time'], ['drib', 'flow', 'reed', 'tang']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 0, 1, 0]","[['kind', 'sort', 'type', 'variety']]"
+"[4, 0, 0]","[1, 1, 1, 1]","[['lumber', 'plod', 'stomp', 'trudge'], ['elastic', 'limber', 'plastic', 'supple'], ['bassinet', 'cellophane', 'harpoon', 'organism'], ['foil', 'glove', 'jacket', 'mask']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['factory', 'mill', 'plant', 'shop']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['bark', 'growl', 'howl', 'whine']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[0, 0, 1, 0]","[['drill', 'grinder', 'router', 'saw']]"
+"[4, 1, 1]","[1, 1, 1, 1]","[['graze', 'nibble', 'peck', 'snack'], ['beans', 'pasta', 'stock', 'vegetables'], ['hunt', 'track', 'trail', 'stalk'], ['broad', 'fore', 'pod', 'type']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['curl', 'lock', 'ringlet', 'tress']]"
+"[1, 4, 0]","[0, 1, 0, 0]","[['boa', 'headdress', 'pillow', 'shuttlecock']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[2, 0, 4]","[1, 1, 0, 0]","[['barge', 'dory', 'scow', 'sloop'], ['buzz', 'drone', 'hum', 'purr']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['canary', 'fink', 'rat', 'snitch']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[1, 1, 0, 0]","[['crab', 'ray', 'sponge', 'squid'], ['circle', 'diamond', 'square', 'triangle']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 1, 0, 0]","[['bishop', 'cardinal', 'pastor', 'prior']]"
+"[2, 3, 1]","[1, 1, 0, 0]","[['cocoa', 'coffee', 'mate', 'tea'], ['boring', 'dull', 'mundane', 'vanilla']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[1, 0, 0, 0]","[['cheer', 'glee', 'festivity', 'mirth']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[1, 0, 1, 0]","[['crest', 'peak', 'summit', 'vertex'], ['baby', 'mini', 'pocket', 'toy']]"
+"[2, 3, 1]","[1, 0, 1, 0]","[['ache', 'burn', 'smart', 'sting'], ['brain', 'courage', 'heart', 'home']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[2, 3, 1]","[0, 1, 1, 0]","[['character', 'glyph', 'icon', 'symbol'], ['assess', 'charge', 'fine', 'levy']]"
+"[1, 2, 2]","[0, 1, 0, 0]","[['cone', 'iris', 'lens', 'pupil']]"
+"[2, 3, 1]","[1, 0, 1, 0]","[['at', 'dollar', 'percent', 'pound'], ['coin', 'create', 'devise', 'invent']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['baton', 'scepter', 'staff', 'wand']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 1, 0, 0]","[['desert', 'ditch', 'maroon', 'strand']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[1, 0, 1, 0]","[['cant', 'lean', 'list', 'slope'], ['con', 'dupe', 'fool', 'trick']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['ballot', 'roster', 'slate', 'ticket']]"
+"[2, 1, 3]","[1, 1, 0, 0]","[['pinch', 'rob', 'steal', 'swipe'], ['bill', 'check', 'invoice', 'tab']]"
+"[1, 2, 2]","[0, 0, 1, 0]","[['center', 'end', 'safety', 'tackle']]"
+"[1, 0, 4]","[0, 1, 0, 0]","[['chapter', 'period', 'phase', 'stage']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[1, 0, 0, 0]","[['charm', 'curse', 'hex', 'spell']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['broom', 'mop', 'rag', 'sponge']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['rock', 'sway', 'swing', 'wave']]"
+"[1, 2, 2]","[0, 0, 1, 0]","[['dozen', 'gross', 'pair', 'score']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[4, 2, 0]","[1, 1, 1, 1]","[['champagne', 'dijon', 'nice', 'tours'], ['clarity', 'definition', 'detail', 'resolution'], ['club', 'group', 'party', 'team'], ['ball', 'countdown', 'fireworks', 'kiss']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[0, 1, 0, 0]","[['bolt', 'dart', 'dash', 'zip']]"
+"[1, 3, 1]","[0, 0, 1, 0]","[['charcoal', 'ink', 'paint', 'pastel']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['alley', 'drive', 'lane', 'street'], ['folio', 'leaf', 'page', 'sheet']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['baby', 'boo', 'dear', 'love']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['boat', 'car', 'plane', 'train']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 0, 4]","[0, 1, 0, 0]","[['bit', 'joke', 'routine', 'sketch']]"
+"[1, 1, 3]","[0, 1, 0, 0]","[['chief', 'first', 'main', 'principal']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['bank', 'save', 'stash', 'store'], ['gall', 'guts', 'nerve', 'stones']]"
+"[4, 0, 1]","[1, 1, 1, 1]","[['bang', 'plop', 'splash', 'thud'], ['hoe', 'plow', 'rake', 'sickle'], ['amuse', 'delight', 'please', 'tickle'], ['plot', 'ploy', 'ruse', 'trick']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['arena', 'bowl', 'dome', 'field']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[1, 1, 0, 0]","[['cloud', 'fog', 'haze', 'mist'], ['shadow', 'tail', 'track', 'trail']]"
+"[4, 1, 0]","[1, 1, 1, 1]","[['chiffon', 'satin', 'silk', 'velvet'], ['perch', 'roost', 'settle', 'land'], ['eyelet', 'lace', 'sole', 'tongue'], ['baby', 'blow', 'package', 'speech']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[0, 1, 1, 0]","[['bolt', 'nail', 'rivet', 'screw'], ['corn', 'olive', 'palm', 'peanut']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['ebb', 'fade', 'flag', 'wane']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 0, 4]","[0, 1, 0, 0]","[['acoustic', 'auditory', 'heard', 'sonic']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['basket', 'bin', 'chest', 'hamper'], ['band', 'circle', 'hoop', 'ring']]"
+"[2, 1, 3]","[1, 1, 0, 0]","[['mall', 'market', 'outlet', 'store'], ['shave', 'thread', 'tweeze', 'wax']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['dodge', 'duck', 'escape', 'skirt']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['atoll', 'bar', 'island', 'key']]"
+"[2, 4, 0]","[1, 1, 0, 0]","[['hum', 'sing', 'scat', 'whistle'], ['count', 'gross', 'sum', 'total']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['city', 'county', 'town', 'village']]"
+"[4, 3, 0]","[1, 1, 1, 1]","[['canal', 'channel', 'sound', 'strait'], ['amount', 'number', 'quantity', 'volume'], ['hidden', 'private', 'remote', 'secret'], ['96', 'mow', 'noon', 'sis']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['knock', 'pan', 'roast', 'slam']]"
+"[1, 4, 0]","[1, 0, 0, 0]","[['pasty', 'pie', 'tart', 'turnover']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[4, 1, 0]","[1, 1, 1, 1]","[['baboon', 'bonobo', 'gibbon', 'gorilla'], ['ape', 'mime', 'mirror', 'parrot'], ['mango', 'mint', 'tamarind', 'tomato'], ['cardinal', 'lama', 'monk', 'pastor']]"
+"[4, 0, 1]","[1, 1, 1, 1]","[['birth', 'creation', 'dawn', 'start'], ['august', 'grand', 'noble', 'regal'], ['march', 'step', 'stride', 'tread'], ['earth', 'groundhog', 'labor', 'may']]"
+"[1, 3, 1]","[0, 0, 1, 0]","[['cliff', 'crag', 'ledge', 'ridge']]"
+"[1, 4, 0]","[0, 1, 0, 0]","[['best', 'cheers', 'regards', 'thanks']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[0, 1, 0, 0]","[['feature', 'hallmark', 'stamp', 'trait']]"
+"[4, 3, 0]","[1, 1, 1, 1]","[['bmw', 'honda', 'jaguar', 'subaru'], ['coach', 'gm', 'player', 'scout'], ['ford', 'grant', 'lincoln', 'wilson'], ['auto', 'post', 'semi', 'sub']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['lance', 'pin', 'skewer', 'spit']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 0, 1, 0]","[['dell', 'glen', 'hollow', 'valley']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['flash', 'heartbeat', 'second', 'wink']]"
+"[4, 1, 1]","[1, 1, 1, 1]","[['brood', 'clutch', 'hatch', 'litter'], ['challenge', 'confront', 'face', 'oppose'], ['body', 'bridge', 'fret', 'neck'], ['hash', 'jumble', 'medley', 'stew']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[2, 3, 1]","[1, 1, 0, 0]","[['brass', 'cheek', 'gall', 'nerve'], ['copper', 'gold', 'nickel', 'silver']]"
+"[2, 3, 1]","[0, 0, 1, 1]","[['foam', 'froth', 'head', 'lather'], ['bubble', 'globe', 'marble', 'pearl']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['goodness', 'heavens', 'lord', 'mercy']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 1, 0, 0]","[['baloney', 'bunk', 'crock', 'tripe']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[1, 0, 0, 0]","[['fabricate', 'fake', 'fix', 'forge']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[2, 3, 1]","[1, 1, 0, 0]","[['boo', 'hiss', 'jeer', 'raspberry'], ['bomb', 'dud', 'flop', 'lemon']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['friday', 'saturday', 'sunday', 'thursday']]"
+"[1, 4, 0]","[0, 1, 0, 0]","[['jerk', 'tug', 'wrench', 'yank']]"
+"[4, 2, 0]","[1, 1, 1, 1]","[['booty', 'loot', 'spoils', 'swag'], ['bottom', 'buns', 'seat', 'tail'], ['cord', 'cradle', 'dial', 'handset'], ['crib', 'digs', 'joint', 'pad']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['can', 'could', 'may', 'might']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['genesis', 'germ', 'seed', 'source']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[1, 0, 0, 0]","[['dead', 'haha', 'lol', 'rofl']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['arm', 'branch', 'chapter', 'wing']]"
+"[1, 0, 4]","[0, 1, 0, 0]","[['display', 'exhibit', 'present', 'show']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[1, 0, 1, 0]","[['down', 'fur', 'scales', 'shell'], ['bow', 'kneel', 'salute', 'stand']]"
+"[2, 3, 1]","[1, 1, 0, 0]","[['bat', 'moth', 'owl', 'wolf'], ['cup', 'lid', 'stirrer', 'straw']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[1, 0, 0, 0]","[['central', 'critical', 'key', 'vital']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['flash', 'gleam', 'glitter', 'sparkle'], ['fish', 'forage', 'hunt', 'trap']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[4, 2, 0]","[1, 1, 1, 1]","[['garter', 'slip', 'teddy', 'thong'], ['abstract', 'brief', 'digest', 'rundown'], ['boa', 'mamba', 'python', 'viper'], ['circle', 'house', 'monty', 'moon']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[0, 1, 0, 0]","[['bird', 'fish', 'mammal', 'reptile']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 4, 0]","[0, 1, 0, 0]","[['bus', 'car', 'motorcycle', 'truck']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 0, 1, 0]","[['bond', 'link', 'relation', 'tie']]"
+"[1, 4, 0]","[0, 0, 1, 0]","[['cowboy', 'drifter', 'outlaw', 'sheriff']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['deluxe', 'grand', 'lavish', 'opulent']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[1, 0, 0, 0]","[['buffalo', 'cow', 'goat', 'sheep']]"
+"[4, 2, 0]","[1, 1, 1, 1]","[['bogus', 'fake', 'phony', 'sham'], ['iris', 'lens', 'pupil', 'retina'], ['alejandro', 'lola', 'michelle', 'stan'], ['copy', 'out', 'over', 'roger']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 0, 4]","[0, 0, 0, 1]","[['22', '2001', '20', '000']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['base', 'bottom', 'foot', 'foundation'], ['anaconda', 'capybara', 'jaguar', 'toucan']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['cider', 'port', 'sake', 'stout']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[4, 1, 2]","[1, 1, 1, 1]","[['gnome', 'goblin', 'ogre', 'troll'], ['bud', 'leaf', 'petal', 'stalk'], ['dragon', 'horse', 'rabbit', 'tiger'], ['agent', 'mole', 'plant', 'spy']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['chart', 'diagram', 'graph', 'map']]"
+"[1, 1, 3]","[0, 0, 1, 0]","[['comb', 'gear', 'saw', 'zipper']]"
+"[1, 2, 2]","[0, 1, 0, 0]","[['i', 'it', 'they', 'we']]"
+"[2, 3, 1]","[1, 1, 0, 0]","[['bun', 'danish', 'muffin', 'turnover'], ['bare', 'naked', 'nude', 'unclad']]"
+"[2, 1, 3]","[1, 1, 0, 0]","[['clarinet', 'flute', 'oboe', 'saxophone'], ['goblet', 'snifter', 'tumbler', 'stein']]"
+"[1, 2, 2]","[0, 1, 0, 0]","[['bingo', 'correct', 'right', 'yes']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['fox', 'ibex', 'lynx', 'oryx']]"
+"[1, 1, 3]","[1, 0, 0, 0]","[['bliss', 'cloud nine', 'heaven', 'paradise']]"
+"[1, 0, 4]","[0, 1, 0, 0]","[['driver', 'eagle', 'hole', 'stroke']]"
+"[2, 2, 2]","[1, 0, 1, 0]","[['atlas', 'hermes', 'nike', 'paris'], ['risk', 'sorry', 'taboo', 'trouble']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['bash', 'blowout', 'party', 'shindig']]"
+"[4, 3, 0]","[1, 1, 1, 1]","[['duds', 'getup', 'outfit', 'threads'], ['busts', 'flops', 'misses', 'turkeys'], ['dodo', 'mammoth', 'mastodon', 'trilobite'], ['peck', 'smack', 'smooch', 'x']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['beard', 'goatee', 'mustache', 'stubble']]"
+"[2, 2, 2]","[1, 0, 1, 0]","[['actor', 'dancer', 'singer', 'stand-up'], ['card', 'chocolate', 'heart', 'rose']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['arizona', 'colorado', 'nevada', 'utah']]"
+"[1, 3, 1]","[0, 1, 0, 0]","[['barb', 'dig', 'diss', 'jab']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[2, 3, 1]","[1, 1, 0, 0]","[['cup', 'gallon', 'pint', 'quart'], ['awful', 'quite', 'super', 'very']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[4, 2, 1]","[1, 1, 1, 1]","[['century', 'decade', 'millennium', 'year'], ['cereal', 'omelet', 'pancake', 'waffle'], ['bacon', 'close', 'munch', 'whistler'], ['egg', 'juror', 'month', 'rose']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 0, 1, 0]","[['bait', 'chum', 'fly', 'sinker']]"
+"[1, 1, 3]","[0, 1, 0, 0]","[['jack', 'nada', 'nothing', 'squat']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 0, 0, 1]","[['anklet', 'bangle', 'brooch', 'pendant']]"
+"[2, 3, 1]","[1, 1, 0, 0]","[['few', 'handful', 'several', 'some'], ['asteroid', 'comet', 'moon', 'planet']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['mite', 'scorpion', 'spider', 'tick']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[1, 0, 0, 0]","[['altar', 'reliquary', 'shrine', 'temple']]"
+"[0, 2, 2]","[0, 0, 0, 0]",[]
+"[4, 1, 0]","[1, 1, 1, 1]","[['gerbil', 'hamster', 'rat', 'vole'], ['carp', 'gripe', 'grouse', 'moan'], ['harp', 'horn', 'organ', 'triangle'], ['keyboard', 'monitor', 'mouse', 'speaker']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['hero', 'hoagie', 'grinder', 'sub']]"
+"[2, 2, 2]","[0, 1, 1, 0]","[['acrylic', 'oil', 'tempera', 'watercolor'], ['falafel', 'katsu', 'samosa', 'schnitzel']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[2, 4, 0]","[1, 1, 0, 0]","[['corduroy', 'denim', 'linen', 'tweed'], ['ghost', 'phantom', 'specter', 'spirit']]"
+"[2, 2, 2]","[1, 1, 0, 0]","[['chameleon', 'gecko', 'iguana', 'monitor'], ['desert', 'forest', 'grassland', 'tundra']]"
+"[2, 3, 1]","[1, 0, 1, 0]","[['blizzard', 'cyclone', 'squall', 'tornado'], ['chicago', 'munich', 'philadelphia', 'rio']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['boat', 'car', 'plane', 'train']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[2, 3, 1]","[1, 0, 1, 0]","[['booby', 'gull', 'pelican', 'puffin'], ['furious', 'incensed', 'irate', 'livid']]"
+"[1, 4, 0]","[0, 1, 0, 0]","[['colon', 'comma', 'hyphen', 'period']]"
+"[1, 3, 1]","[0, 0, 1, 0]","[['cuba', 'japan', 'malta', 'palau']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['bassoon', 'clarinet', 'flute', 'oboe']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['clock', 'hourglass', 'sundial', 'watch']]"
+"[1, 4, 0]","[1, 0, 0, 0]","[['ash', 'cedar', 'maple', 'pine']]"
+"[2, 3, 1]","[1, 0, 1, 0]","[['hawk', 'move', 'peddle', 'vend'], ['dolphin', 'manatee', 'otter', 'seal']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['kangaroo', 'koala', 'wallaby', 'wombat']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 2, 2]","[1, 0, 0, 0]","[['aroma', 'bouquet', 'fragrance', 'scent']]"
+"[2, 3, 1]","[1, 0, 1, 0]","[['ferry', 'junk', 'tug', 'yacht'], ['flank', 'loin', 'round', 'shank']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['heel', 'lace', 'sole', 'tongue']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['cucumber', 'eggplant', 'pepper', 'tomato']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[4, 2, 0]","[1, 1, 1, 1]","[['add', 'divide', 'multiply', 'subtract'], ['fly', 'gnat', 'moth', 'wasp'], ['tang', 'tetra', 'skate', 'sole'], ['alley', 'cool', 'copy', 'lap']]"
+"[2, 2, 2]","[0, 0, 1, 1]","[['banana', 'coconut', 'mango', 'pineapple'], ['emu', 'kiwi', 'ostrich', 'penguin']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['beret', 'bowler', 'fedora', 'fez']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[0, 0, 1, 0]","[['anvil', 'cochlea', 'hammer', 'stirrup']]"
+"[0, 3, 1]","[0, 0, 0, 0]",[]
+"[2, 4, 0]","[1, 1, 0, 0]","[['beak', 'muzzle', 'snout', 'trunk'], ['boxer', 'dalmatian', 'husky', 'poodle']]"
+"[4, 1, 1]","[1, 1, 1, 1]","[['chrome', 'edge', 'opera', 'safari'], ['amy', 'beth', 'jo', 'meg'], ['jazz', 'pop', 'punk', 'rap'], ['baby', 'jon', 'kim', 'wayne']]"
+"[1, 4, 0]","[1, 0, 0, 0]","[['barley', 'oat', 'rye', 'spelt']]"
+"[2, 4, 0]","[0, 0, 1, 1]","[['beef', 'pork', 'poultry', 'venison'], ['row', 'quarrel', 'spat', 'tiff']]"
+"[1, 1, 3]","[0, 1, 0, 0]","[['cup', 'medal', 'ribbon', 'trophy']]"
+"[1, 0, 4]","[1, 0, 0, 0]","[['ascot', 'bolo', 'scarf', 'tie']]"
+"[4, 0, 3]","[1, 1, 1, 1]","[['almond', 'cashew', 'pecan', 'walnut'], ['americano', 'cappuccino', 'espresso', 'latte'], ['emerald', 'forest', 'kelly', 'olive'], ['bean', 'clean', 'fox', 'peanut']]"
+"[1, 3, 1]","[1, 0, 0, 0]","[['caw', 'chirp', 'cluck', 'tweet']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[2, 2, 2]","[0, 1, 1, 0]","[['beta', 'chi', 'delta', 'iota'], ['gnat', 'gnaw', 'gnocchi', 'gnome']]"
+"[1, 2, 2]","[0, 1, 0, 0]","[['envy', 'greed', 'lust', 'pride']]"
+"[1, 2, 2]","[1, 0, 0, 0]","[['cardamom', 'clove', 'coriander', 'cumin']]"
+"[0, 4, 0]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 0, 1, 0]","[['beet', 'carrot', 'corn', 'onion']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 0, 4]","[1, 0, 0, 0]","[['ankle', 'knee', 'shin', 'thigh']]"
+"[0, 0, 4]","[0, 0, 0, 0]",[]
+"[1, 3, 1]","[0, 1, 0, 0]","[['ketchup', 'mayo', 'relish', 'tartar']]"
+"[1, 1, 3]","[0, 0, 1, 0]","[['dust', 'mop', 'sweep', 'vacuum']]"
+"[0, 1, 3]","[0, 0, 0, 0]",[]
+"[1, 1, 3]","[1, 0, 0, 0]","[['boot', 'loafer', 'pump', 'sneaker']]"

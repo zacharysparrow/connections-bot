@@ -12,16 +12,16 @@ from scipy.linalg import qr
 
 from utils import *
 
-large_width = 400
-np.set_printoptions(linewidth=large_width)
+#large_width = 400
+#np.set_printoptions(linewidth=large_width)
 
 
-puzzle = read_csv("puzzles/test_puzzle_3.txt") #3 is easy, 2 is medium, 1,4 are hard
-puzzle_words = [x.lower().strip() for xs in puzzle for x in xs]
-print(np.reshape(puzzle_words,(4,4)))
-print()
+#puzzle = read_csv("puzzles/test_puzzle_1.txt") #3 is easy, 2 is medium, 1,4 are hard
+#puzzle_words = [x.lower().strip() for xs in puzzle for x in xs]
+#print(np.reshape(puzzle_words,(4,4)))
+#print()
 
-n_embeddings_per_word = 3
+#n_embeddings_per_word = 3
 
 
 def make_sim_mat(embeddings, words_to_embeddings):
@@ -70,12 +70,11 @@ def add_to_cluster(cluster, sim_mat, size, wrong_groups, close_groups, ww2w, wor
     return best_addition
 
 
-def find_cluster(sim_mat, size, wrong_groups, close_groups, ww2w, words):
-    cluster = []
-    for i in range(size):
-        cluster.append(add_to_cluster(cluster, sim_mat, size, wrong_groups, close_groups, ww2w, words))
-        print(cluster)
-    return cluster
+#def find_cluster(sim_mat, size, wrong_groups, close_groups, ww2w, words):
+#    cluster = []
+#    for i in range(size):
+#        cluster.append(add_to_cluster(cluster, sim_mat, size, wrong_groups, close_groups, ww2w, words))
+#    return cluster
 
 
 def enumerate_groups(sim_mat):
@@ -109,8 +108,11 @@ def select_clusters(words, n_defns):
     model = SentenceTransformer("all-MiniLM-L6-v2")
     synsets = [wn.synsets(w) for w in words]
     all_definitions = [[w.definition() for w in s] for i,s in enumerate(synsets)]
+    for i,d in enumerate(all_definitions):
+        all_definitions[i].append(words[i])
     embeddings = []
     for d in all_definitions:
+        print(d)
         word_embedding = get_embeddings(d, n_defns, model)
         embeddings.append(word_embedding)
     embeddings_to_words = [i for i,w in enumerate(words) for j in embeddings[i]]
@@ -191,11 +193,92 @@ def select_clusters(words, n_defns):
     print(np.array(groups))
     return(groups)
 
-#best_guess = np.array(select_clusters(puzzle_words, model))
-#puzzle_words.sort()
-#print(puzzle_words)
-test_words = puzzle_words.copy()
-#test_words = puzzle_words[0:8].copy()
-#test_words.sort()
-#best_guess = np.array(select_clusters(test_words, model, n_embeddings_per_word))
-best_guess = np.array(select_clusters(test_words, n_embeddings_per_word))
+
+def overlap(line, found_words):
+    count = 0
+    for w in found_words:
+        if w in line:
+            count += 1
+    return count
+
+
+def solver(puzzle, n_defns, model):
+    words = [item.lower() for sublist in puzzle for item in sublist]
+    print(words)
+    
+    synsets = [wn.synsets(w) for w in words]
+    all_definitions = [[w.definition() for w in s] for i,s in enumerate(synsets)]
+
+    for i,d in enumerate(all_definitions):
+        all_definitions[i].append(words[i])
+    embeddings = []
+
+    for d in all_definitions:
+        word_embedding = get_embeddings(d, n_defns, model)
+        embeddings.append(word_embedding)
+    embeddings_to_words = [i for i,w in enumerate(words) for j in embeddings[i]]
+    words_to_embeddings = [[] for i in range(len(words))]
+    counter = 0
+
+    for i,w in enumerate(words):
+        for e in embeddings[i]:
+            words_to_embeddings[i].append(counter)
+            counter += 1
+    embeddings = [item for sublist in embeddings for item in sublist]
+    sim_mat = make_sim_mat(embeddings, words_to_embeddings)
+
+    all_groups = enumerate_groups(sim_mat)
+    sorted_keys = sorted(all_groups, key=all_groups.get, reverse=True)
+
+    groups = []
+    wrong_groups = []
+    close_groups = []
+    found_colors = [0,0,0,0]
+    lives_left = 4
+    
+    while lives_left > 0 and len(groups) < 4:
+        
+        if sorted_keys == []:
+            raise Exception("I ran out of options!")
+        
+        opt_solution = list(sorted_keys[0])
+        connection = [embeddings_to_words[i] for i in opt_solution]
+        found_words = [w for i,w in enumerate(words) if i in connection]
+        
+        if len(found_words) != 4:
+            raise Exception("I messed up somewhere!")
+
+        overlaps = [overlap(line, found_words) for line in puzzle]
+        connection_overlap = max(overlaps)
+        if connection_overlap == 4: 
+            embeddings_to_remove = [words_to_embeddings[i] for i in connection]
+            embeddings_to_remove = [item for sublist in embeddings_to_remove for item in sublist]
+            groups.append(found_words)
+            found_colors[np.argmax(overlaps)] = 1
+            sorted_keys = [k for k in sorted_keys if not any(i in embeddings_to_remove for i in k)]
+
+        elif connection_overlap <= 2:
+            lives_left -= 1
+            wrong_groups.append(found_words)
+            sorted_keys = [k for k in sorted_keys if sum(embeddings_to_words[i] in connection for i in k) <= 2]
+            if lives_left == 0:
+                return [[len(groups),len(close_groups),len(wrong_groups)], found_colors, groups]
+        
+        elif connection_overlap == 3:
+            lives_left -= 1
+            close_groups.append(found_words)
+            sorted_keys = [k for k in sorted_keys if (sum(embeddings_to_words[i] in connection for i in k) in set([0,1,3]))]
+            if lives_left == 0:
+                return [[len(groups),len(close_groups),len(wrong_groups)], found_colors, groups]
+    
+    return [[len(groups),len(close_groups),len(wrong_groups)], found_colors, groups]
+
+
+
+
+
+#test_words = puzzle_words.copy()
+#best_guess = np.array(select_clusters(test_words, 3))
+
+#model = SentenceTransformer("all-MiniLM-L6-v2")
+#solver(test_words, n_embeddings_per_word, model)
