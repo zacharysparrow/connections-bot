@@ -12,7 +12,7 @@ Stack:
 	- Identify pairs of points that are too far apart to be connected and don't iterate through those
 - Dictionary clearly missing some relevant definitions, mostly informal ones. Use wiktionary API?
 	- https://en.wiktionary.org/api/rest_v1/#/Page%20content/get_page_definition__term_
-
+- Just use contextual encoding on the list of words?
 
 LINKS:
 https://medium.com/@prescod/using-ai-to-solve-connections-59d42e47985b
